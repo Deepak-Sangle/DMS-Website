@@ -79,39 +79,48 @@ input[type="checkbox"]:checked ~ span:nth-of-type(3) {
 .MobileLI {
   display: none;
   animation: MobNavg 0.6s ease-in-out 0s 1 forwards;
-  transform-origin: top center;
+  transform-origin: top center; 
+  position: absolute;
+  z-index: +2;
+  box-shadow: 0px -3px 17px 8px black;
+  background-color: #2c2c2c;
+  width: 100vw;
 }
 .AlternateMobileLI {
   display: none;
   animation: NavgClose 0.6s ease-in-out 0s 1 forwards;
   transform-origin: top center;
+  position: absolute;
+  z-index: +2;
+  background-color: #2c2c2c;
+  width: 100vw;
 }
 @keyframes MobNavg {
   0% {
     opacity: 0;
     height: 0vh;
     transform: scaleY(0);
-    transform-origin: bottom;
+    /* transform-origin: bottom; */
   }
   100% {
     opacity: 1;
-    height: 23vh;
+    height: 28vh;
     transform: scaleY(1);
-    transform-origin: bottom;
+    /* transform-origin: bottom; */
   }
 }
 @keyframes NavgClose {
   0% {
-    height: 23vh;
+    height: 28vh;
     opacity: 1;
     transform: scaleY(1);
-    transform-origin: bottom;
+    /* transform-origin: bottom; */
   }
   100% {
     height: 0vh;
     opacity: 0;
     transform: scaleY(0);
-    transform-origin: bottom;
+    /* transform-origin: bottom; */
   }
 }
 .MobileNavUl {
@@ -121,7 +130,7 @@ input[type="checkbox"]:checked ~ span:nth-of-type(3) {
   margin: 1vh 0vw;
 }
 .MobileNavLi a {
-  color: black !important;
+  color: white !important;
   font-size: 3vh !important;
 }
 /*Laptop Navigation Bar*/
@@ -132,7 +141,7 @@ input[type="checkbox"]:checked ~ span:nth-of-type(3) {
   top: 0px;
   flex-flow: row wrap;
   justify-content: space-around;
-  background-color: white;
+  background-color: black;
   border-bottom: 2px solid black;
 }
 .Nav ul,
@@ -155,15 +164,15 @@ input[type="checkbox"]:checked ~ span:nth-of-type(3) {
 .MobileNavLi {
   font-size: max(1.5vw, 1.5vh);
   font-family: "Acme", sans-serif;
-  margin: 0.55vw 2vw;
+  margin: 1.5vw 2vw;
   width: 10vw;
   cursor: pointer;
 }
 .Nav li a,
 .MobileNavLi a,
 .NavLi {
+  color: white;
   text-decoration: none !important;
-  color: black;
   display: flex;
   flex-flow: column wrap;
 }
@@ -183,8 +192,9 @@ input[type="checkbox"]:checked ~ span:nth-of-type(3) {
     position: absolute;
     border: none !important;
     /* display: none; */
-}
-.dropList{
+  }
+  .dropList{
+    color: black !important;
     font-size: max(1.2vw, 1.2vh);
     font-weight: lighter;    
     padding: 5px ;
@@ -218,12 +228,17 @@ input[type="checkbox"]:checked ~ span:nth-of-type(3) {
   /* padding: 10px; */
 }
 /* Heading */
-.Name {
-  position: relative;
+.nameClass{
   text-align: center;
-  font-family: "Ubuntu", sans-serif;
+}
+.Name {
+  text-align: center;
+  font-family: 'Carter One', cursive;
   font-weight: bolder;
-  text-shadow: 0px 0px 15px red;
+  /* -webkit-text-stroke: 1px black; */
+  text-shadow: 3px 3px 25px black;
+  color: white;
+  -webkit-text-stroke: 1px black;
   font-size: 8vw;
   animation: Headline 2s ease-out 0s 1 normal forwards;
 }
@@ -256,19 +271,47 @@ input[type="checkbox"]:checked ~ span:nth-of-type(3) {
 .Phrase {
   /* position: relative; */
   font-weight: bold;
-  font-family: "Gwendolyn", cursive;
+  font-family: 'Dancing Script', cursive;
   font-size: 3vw;
+  color: white;
   animation: Phrase 2.4s ease-out 0s 1 normal forwards;
 }
 .MainBG {
-  background-image: url(Images/.BG/BG3.png);
+  background-image: url(Images/.BG/BG4.jpg);
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center bottom;
   height: 100vh;
   position: relative;
-  
+  opacity: 1;
 }
+
+.opacity1{
+  animation: opacity1 1s ease 0s 1 normal forwards;
+}
+
+.opacity0{
+  animation: opacity0 1s ease 0s 1 normal forwards;
+}
+
+@keyframes opacity1 {
+  0%{
+    /* opacity: 0.4; */
+    filter: blur(8px);
+  }
+  100%{
+    filter: blur();
+  }
+}
+@keyframes opacity0 {
+  0%{
+    filter: blur();
+  }
+  100%{
+    filter: blur(8px);
+  }
+}
+
 /* Main Body */
 .MainBody {
   margin: 0px;
@@ -585,6 +628,9 @@ input[type="checkbox"]:checked ~ span:nth-of-type(3) {
   cursor: pointer;
   text-align: center;
 }
+.icon:hover{
+  filter:opacity(0.3)
+}
 #Logo1 {
   background-image: url(Images/.Social/Facebook.png);
 }
@@ -665,4 +711,51 @@ input[type="checkbox"]:checked ~ span:nth-of-type(3) {
 }
 .Data p {
   text-align: justify;
+}
+
+
+/* Responsive CSS  */
+
+@media only screen and (max-width: 700px){
+    
+  .Info{
+      width: 100%;
+      padding-top: 20px;
+  }
+  .DP{
+      width: 20vw !important;
+      padding-left: 5px;
+  }
+  .NewsBox{
+      width: 80vw;
+      max-width: 200px;
+  }
+  .Box{
+      height: 20vh;
+      line-height: 20vh;
+      width: 100vw;
+      font-size: 4vh;
+  }
+  .Box:hover{
+      line-height: 30vh;
+      font-size: 5vh;
+  }
+  .Name{
+      font-size: 18vh;
+  }
+  .LinksClass{
+      width: 100%;
+  }
+  .NavBar{
+      background-position: left bottom;
+  }
+}
+/*For Navbar*/
+@media only screen and (max-width: 450px){
+  .Nav{
+      display: none;
+  }
+  .MainBG{
+      height: 100vh !important;
+  }
 }
