@@ -50,18 +50,18 @@ const Navbar = () => {
                 </label>
             </nav>
 
-        <div className="AlternateMobileLI" id="MobNav">
-            <DisplayNav navbar = {Navbar.copyWithin()} mainTitle='MobileNavUl'classTitle='MobileNavLi'/>
-        </div>
-
-        <nav className="Nav " id="TopNavHeight">
-            <DisplayNav navbar = {Navbar.filter(val => val.id!==5)} mainTitle='NavUl' classTitle='NavLi NavBarLi'/>
-            <div className="Account" id="account">
-                <a className="NavLi" href="Pages.html"> ACCOUNT </a>
+            <div className="AlternateMobileLI" id="MobNav">
+                <DisplayNav navbar = {Navbar.copyWithin()} mainTitle='MobileNavUl'classTitle='MobileNavLi'/>
             </div>
-        </nav>
+        
+            <nav className="Nav " id="TopNavHeight">
+                <DisplayNav navbar = {Navbar.filter(val => val.id!==5)} mainTitle='NavUl' classTitle='NavLi NavBarLi'/>
+                <div className="Account" id="account">
+                    <a className="NavLi" href="Pages.html"> ACCOUNT </a>
+                </div>
+            </nav>
 
-    </div>
+        </div>
     );
 }
  
