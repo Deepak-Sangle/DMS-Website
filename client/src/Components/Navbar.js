@@ -25,20 +25,18 @@ const Navbar = () => {
         {content: 'Account', url:'Pages.html', id: 5 }
     ];
 
-    const DisplayNav = (props)=>{
-        const mainTitle = props.mainTitle;
+    const DisplayNavMobile = (props)=>{
         const navbar = props.navbar;
-        const classTitle = props.classTitle
         
         return (
-            <ul className={mainTitle}>
+            <ul className="MobileNavUl">
                 {navbar.map((val)=>(
-                    <li key={val.id} className={classTitle}><a href={val.url}>{val.content.toUpperCase()}</a></li>
+                    <li id={val.content.toLowerCase()} key={val.id} className="MobileNavLi"><a href={val.url}>{val.content.toUpperCase()}</a></li>
                 ))}
             </ul>
         )
     }
-
+    
     return ( 
         <div className="NavBar">
             <nav className="MobileNav">
@@ -51,14 +49,52 @@ const Navbar = () => {
             </nav>
 
             <div className="AlternateMobileLI" id="MobNav">
-                <DisplayNav navbar = {Navbar.copyWithin()} mainTitle='MobileNavUl'classTitle='MobileNavLi'/>
+                <DisplayNavMobile navbar = {Navbar.copyWithin()} />
             </div>
         
             <nav className="Nav " id="TopNavHeight">
-                <DisplayNav navbar = {Navbar.filter(val => val.id!==5)} mainTitle='NavUl' classTitle='NavLi NavBarLi'/>
-                <div className="Account" id="account">
-                    <a className="NavLi" href="Pages.html"> ACCOUNT </a>
-                </div>
+                {/* <DisplayNavLaptop navbar = {Navbar}/> */}
+                <ul className="NavUl">
+                    <div className="dropDown">
+                        <li className="NavLi NavBarLi"><a href="#"> HOME </a></li>
+                        <div class="dropdownContent">
+
+                        </div>
+                    </div>
+                    <div className="dropDown">
+                        <li className="NavLi NavBarLi"><a href="#"> SERVICES </a></li>
+                        <div class="dropdownContent">
+                            <li class="first-list dropdownlist" ><a href="#">All Registers</a></li>
+                            <li class="dropdownlist" ><a href="#">New Services</a></li>
+                            <li class="dropdownlist" ><a href="#">Other Services</a></li>
+                        </div>
+                    </div>
+                    <div className="dropDown">
+                        <li className="NavLi NavBarLi"><a href="#"> PRICES </a></li>
+                        <div class="dropdownContent">
+                            <li class="first-list dropdownlist" ><a href="#">Price Lists</a></li>
+                            <li class="dropdownlist" ><a href="#">Order</a></li>
+                        </div>
+                    </div>
+                    <div className="dropDown">
+                        <li className="NavLi NavBarLi"><a href="#"> ABOUT </a></li>
+                        <div class="dropdownContent">
+                            <li class="first-list dropdownlist" ><a href="#">Address</a></li>
+                            <li class="dropdownlist" ><a href="#">Availability</a></li>
+                            <li class="dropdownlist" ><a href="#">Contact</a></li>
+                        </div>
+                    </div>
+                    <div className="dropDown">
+                        <li className="NavLi NavBarLi"><a href="#"> ACCOUNT </a></li>
+                        <div class="dropdownContent">
+                            <li class="first-list dropdownlist" ><a href="#">Deepak Sangle</a></li>
+                            <li class="dropdownlist" ><a href="#">Sign out</a></li>
+                            <li class="dropdownlist" ><a href="#">Cart</a></li>
+                            <li class="dropdownlist" ><a href="#">Annoucement</a></li>
+                        </div>
+                    </div>
+
+                </ul>
             </nav>
 
         </div>
