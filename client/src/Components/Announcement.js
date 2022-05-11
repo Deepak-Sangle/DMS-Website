@@ -9,7 +9,7 @@ const Announcement = () => {
         .then(res => res.json())
         .then(data => setNews(data));
     },[]);
-
+    
     const DisplayNews = () => {
         return (
             <div className="News">

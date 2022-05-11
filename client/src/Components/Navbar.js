@@ -1,3 +1,5 @@
+import {Link} from 'react-router-dom'
+
 const Navbar = () => {
 
     function MobileNavigation() {
@@ -31,7 +33,7 @@ const Navbar = () => {
         return (
             <ul className="MobileNavUl">
                 {navbar.map((val)=>(
-                    <li id={val.content.toLowerCase()} key={val.id} className="MobileNavLi"><a href={val.url}>{val.content.toUpperCase()}</a></li>
+                    <li id={val.content.toLowerCase()} key={val.id} className="MobileNavLi"><Link to={val.url}>{val.content.toUpperCase()}</Link></li>
                 ))}
             </ul>
         )
@@ -40,7 +42,7 @@ const Navbar = () => {
     return ( 
         <div className="NavBar">
             <nav className="MobileNav">
-                <label for="check">
+                <label htmlFor="check">
                     <input type="checkbox" onClick={MobileNavigation} id="check" />
                     <span></span>
                     <span></span>
@@ -56,41 +58,41 @@ const Navbar = () => {
                 {/* <DisplayNavLaptop navbar = {Navbar}/> */}
                 <ul className="NavUl">
                     <div className="dropDown">
-                        <li className="NavLi NavBarLi"><a href="#"> HOME </a></li>
-                        <div class="dropdownContent">
+                        <li className="NavLi NavBarLi"><Link to="/"> HOME </Link></li>
+                        <div className="dropdownContent">
 
                         </div>
                     </div>
                     <div className="dropDown">
-                        <li className="NavLi NavBarLi"><a href="#"> SERVICES </a></li>
-                        <div class="dropdownContent">
-                            <li class="first-list dropdownlist" ><a href="#">All Registers</a></li>
-                            <li class="dropdownlist" ><a href="#">New Services</a></li>
-                            <li class="dropdownlist" ><a href="#">Other Services</a></li>
+                        <li className="NavLi NavBarLi"><Link to="#"> SERVICES </Link></li>
+                        <div className="dropdownContent">
+                            <li className="first-list dropdownlist" ><Link to="#">All Registers</Link></li>
+                            <li className="dropdownlist" ><Link to="#">New Services</Link></li>
+                            <li className="dropdownlist" ><Link to="#">Other Services</Link></li>
                         </div>
                     </div>
                     <div className="dropDown">
-                        <li className="NavLi NavBarLi"><a href="#"> PRICES </a></li>
-                        <div class="dropdownContent">
-                            <li class="first-list dropdownlist" ><a href="#">Price Lists</a></li>
-                            <li class="dropdownlist" ><a href="#">Order</a></li>
+                        <li className="NavLi NavBarLi"><Link to="#"> PRICES </Link></li>
+                        <div className="dropdownContent">
+                            <li className="first-list dropdownlist" ><Link to="#">Price Lists</Link></li>
+                            <li className="dropdownlist" ><Link to="#">Order</Link></li>
                         </div>
                     </div>
                     <div className="dropDown">
-                        <li className="NavLi NavBarLi"><a href="#"> ABOUT </a></li>
-                        <div class="dropdownContent">
-                            <li class="first-list dropdownlist" ><a href="#">Address</a></li>
-                            <li class="dropdownlist" ><a href="#">Availability</a></li>
-                            <li class="dropdownlist" ><a href="#">Contact</a></li>
+                        <li className="NavLi NavBarLi"><Link to="#"> ABOUT </Link></li>
+                        <div className="dropdownContent">
+                            <li className="first-list dropdownlist" ><Link to="#">Address</Link></li>
+                            <li className="dropdownlist" ><Link to="#">Availability</Link></li>
+                            <li className="dropdownlist" ><Link to="/contact-us">Contact</Link></li>
                         </div>
                     </div>
                     <div className="dropDown">
-                        <li className="NavLi NavBarLi"><a href="#"> ACCOUNT </a></li>
-                        <div class="dropdownContent">
-                            <li class="first-list dropdownlist" ><a href="#">Deepak Sangle</a></li>
-                            <li class="dropdownlist" ><a href="#">Sign out</a></li>
-                            <li class="dropdownlist" ><a href="#">Cart</a></li>
-                            <li class="dropdownlist" ><a href="#">Annoucement</a></li>
+                        <li className="NavLi NavBarLi"><Link to="#"> ACCOUNT </Link></li>
+                        <div className="dropdownContent">
+                            <li className="first-list dropdownlist" ><Link to="#">Deepak Sangle</Link></li>
+                            <li className="dropdownlist" ><Link to="#">Sign out</Link></li>
+                            <li className="dropdownlist" ><Link to="#">Cart</Link></li>
+                            <li className="dropdownlist" ><Link to="#">Annoucement</Link></li>
                         </div>
                     </div>
 

@@ -19,33 +19,36 @@
     ],
 
     "Footer" : [
-        {
+        {   
             "links" : [
                 {"href": "https://www.facebook.com/profile.php?id=100071893074398", "id": "Logo1"},
                 {"href": "https://www.instagram.com/_alwaysdeepak_/", "id": "Logo2"},
                 {"href": "https://www.linkedin.com/in/deepak-sangle-684218212/", "id": "Logo3"},
                 {"href": "https://twitter.com/DeepakS35306910", "id": "Logo4"},
                 {"href": "https://wa.link/lfemtg", "id": "Logo5"}
-            ],
-            
+            ]
+        },
+        {
             "quickLink1" : [
-                {"name": "Register", "href": "#"},
-                {"name": "Stamps", "href": "#"},
-                {"name": "Banners", "href": "#"},
-                {"name": "Letter Head", "href": "#"}
-            ],
-
+                {"name": "Register", "href": "#","id": "1"},
+                {"name": "Stamps", "href": "#", "id": "2"},
+                {"name": "Banners", "href": "#", "id": "3"},
+                {"name": "Letter Head", "href": "#", "id": "4"}
+            ]
+        },
+        {
             "quickLink2" : [
-                {"name": "Create Account", "href": "#"},
-                {"name": "Sign In", "href": "#"},
-                {"name": "Manage Account", "href": "#"},
-                {"name": "Sign Out", "href": "#"}
-            ],
-
+                {"name": "Create Account", "href": "#", "id": "1"},
+                {"name": "Sign In", "href": "#", "id": "2"},
+                {"name": "Manage Account", "href": "#", "id": "3"},
+                {"name": "Sign Out", "href": "#", "id": "4"}
+            ]
+        },
+        {
             "quickLink3" : [
-                {"name": "Prices", "href": "#"},
-                {"name": "Address", "href": "#"},
-                {"name": "Contact Us", "href": "#"}
+                {"name": "Prices", "href": "#", "id": "1"},
+                {"name": "Address", "href": "#", "id": "2"},
+                {"name": "Contact Us", "href": "#", "id": "3"}
             ]
         }
     ]

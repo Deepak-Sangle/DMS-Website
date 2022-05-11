@@ -15,9 +15,9 @@ const Footer = () => {
         .then(res => res.json())
         .then(data => {
             setLinks(data[0].links);
-            setQuickLink1(data[0].quickLink1);
-            setQuickLink2(data[0].quickLink2);
-            setQuickLink3(data[0].quickLink3);
+            setQuickLink1(data[1].quickLink1);
+            setQuickLink2(data[2].quickLink2);
+            setQuickLink3(data[3].quickLink3);
         })
     },[]);    
 
@@ -28,7 +28,7 @@ const Footer = () => {
             <div className="linkslist">
                 <ul className="LinksUl">
                     {Links && Links.map((link)=>(
-                        <li key={link.id}>{link.name}</li>
+                        <li key={link.id}> {link.name} </li>
                     ))}
                 </ul>
             </div>
