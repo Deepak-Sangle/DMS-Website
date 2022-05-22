@@ -41,6 +41,28 @@ const Signin = () => {
 		}
 	}
 
+	const checkAuthentication = async ()=>{
+		const res = await fetch('/signup', {
+			method : "GET",
+			credentials: "include",	
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json',
+			}
+		});
+		const data = await res.json();
+		if(res.status===200 && data.isAuthenticated){
+			navigate('/');
+		}
+		else if(res.status!==200){
+			alert("Some error occured. Please try again");
+		}
+	}
+
+	useEffect(()=>{
+		checkAuthentication();
+	},[])
+
     return (
         <div className="box-form">
 	        <div className="left">

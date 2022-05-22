@@ -3,12 +3,16 @@ function checkAuthenticated(req, res, next) {
         return next();
     }
     else
-        res.redirect('/signin');
+        // return res.redirect('/signin');
+        res.status(200).send({"isAuthenticated" : false});    
+    
 }
 
 function checkNotAuthenticated(req, res, next) {
+    // console.log(req.headers);
     if (req.isAuthenticated()) {
-        return res.redirect('/');
+        return res.status(200).send({"isAuthenticated" : true});
+        // return res.redirect('/');
     }
     else
         next();

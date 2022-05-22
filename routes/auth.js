@@ -11,7 +11,7 @@ const User = require('../models/user');
 //Getting all requests
 
 router.get('/', checkAuthenticated, (req,res)=> {
-    res.status(200).send("Hello you are inside homepage of get request");
+    res.status(200).send(req.user);
 });
 
 router.get('/signup', checkNotAuthenticated, (req,res)=>{
@@ -53,19 +53,31 @@ router.post('/signup', async (req, res) => {
 });
 
 router.get("/signin", checkNotAuthenticated, (req, res) => {
-    res.status(200).send("You are inside get /signin request");
-    // res.send(message);
+    res.status(200).send({"isAuthenticated" : false});
 });
 
-router.post('/signin', (req,res,next)=>{
-    passport.authenticate('local', (err,user,info) => {
-        if(err) throw err;
-        if(user) {
-            res.send(user);
-        }
-        res.send(info);
-    })(req,res,next);
+// router.post('/signin', (req,res,next)=>{
+//     passport.authenticate('local', (err,user,info) => {
+//         if(err) throw err;
+//         if(user) {
+//             res.send(user);
+//         }
+//         res.send(info);
+//     })(req,res,next);
+// });
+
+router.post('/signin', passport.authenticate('local', {
+    successRedirect: '/successjson',
+    failureRedirect: '/failurejson',
+    failureFlash: true
+}));
+
+router.get('/successjson', (req,res)=>{
+    res.status(200).send(req.user);
 });
 
+router.get('/failurejson', (req,res)=>{
+    res.send(req.flash);
+});
 
 module.exports = router;

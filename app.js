@@ -30,17 +30,18 @@ initPassport(passport, (email) => {
     return User.findOne({ email });
 });
 
-// session
+
 app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: true,
-    saveUninitialized: true
+    saveUninitialized: true,
+    cookie:{ secure :false}
 }));
 
+// session
 app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
-
 
 //Route Requests
 app.use(require('./routes/auth'));
