@@ -1,3 +1,5 @@
+import './Styles/MainBG.css';
+
 const MainBG = () => {
     return ( 
     <div className="MainBG" id="BGG">

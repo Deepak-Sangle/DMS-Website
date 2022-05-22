@@ -1,25 +1,20 @@
 import { useEffect, useState } from "react";
+import './Styles/Footer.css';
+const localDB = require('../Database/localDB');
 
 const Footer = () => {
     
     const [links, setLinks] = useState();
-
     const [quickLink1, setQuickLink1] = useState(null);
-
     const [quickLink2, setQuickLink2] = useState(null);
-
     const [quickLink3, setQuickLink3] = useState(null);
 
     useEffect(()=>{
-        fetch("http://localhost:8000/Footer")
-        .then(res => res.json())
-        .then(data => {
-            setLinks(data[0].links);
-            setQuickLink1(data[1].quickLink1);
-            setQuickLink2(data[2].quickLink2);
-            setQuickLink3(data[3].quickLink3);
-        })
-    },[]);    
+        setLinks(localDB.Footer[0].links);
+        setQuickLink1(localDB.Footer[1].quickLink1);
+        setQuickLink2(localDB.Footer[2].quickLink2);
+        setQuickLink3(localDB.Footer[3].quickLink3);
+    },[]);
 
 
     const DisplayLinks = (props)=>{

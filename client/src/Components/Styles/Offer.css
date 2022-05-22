@@ -1,0 +1,161 @@
+
+  .Boxes {
+    display: flex;
+    align-items: center;
+    flex-flow: row wrap;
+    /* align-items: ev; */
+    justify-content: center;
+    margin-top: 20px;
+  }
+  .Box {
+    border: 2px none #500000;
+    box-sizing: border-box;
+    height: 200px;
+    width: 32.96vw;
+    color: black;
+    text-decoration-style: solid;
+    text-align: center;
+    font-size: 3vw;
+    line-height: 200px;
+    font-weight: bold;
+    cursor: pointer;
+    transition-duration: 0.5s;
+    transition-property: all;
+    font-family: "Fuzzy Bubbles", cursive;
+    background-color: #ebd9eb;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-size: 110%;
+    background-position: center;
+    user-select: none;
+  }
+  
+  @media only screen and (min-width: 701px) and (max-width: 1000px) {
+    .Box {
+      height: 20vh;
+      line-height: 20vh !important;
+    }
+    .Box:hover {
+      line-height: 30vh !important;
+    }
+  }
+  @media only screen and (min-width: 450px) and (max-width: 1000px) {
+    .Box {
+      width: 50vw !important;
+      font-size: 4.7vw !important;
+    }
+    .Box:hover {
+      font-size: 5vw !important;
+    }
+    #Box9 {
+      width: 100vw !important;
+    }
+  }
+  .Box:hover {
+    font-size: 3.8vw;
+    background-size: 120%;
+    line-height: 270px;
+  }
+  #Box1 {
+    background-image: linear-gradient(
+        rgba(255, 255, 255, 0.3),
+        rgba(255, 255, 255, 0.3)
+      ),
+      url("../../Images/.Boxes/Register.jpg");
+  }
+  #Box7 {
+    background-image: linear-gradient(
+        rgba(255, 255, 255, 0.3),
+        rgba(255, 255, 255, 0.3)
+      ),
+      url("../../Images/.Boxes/Banner.jpg");
+  }
+  #Box8 {
+    background-image: linear-gradient(
+        rgba(255, 255, 255, 0.3),
+        rgba(255, 255, 255, 0.3)
+      ),
+      url("../../Images/.Boxes/Offset.jpg");
+  }
+  #Box2 {
+    background-image: linear-gradient(
+        rgba(255, 255, 255, 0.3),
+        rgba(255, 255, 255, 0.3)
+      ),
+      url("../../Images/.Boxes/Stamp.jpg");
+  }
+  #Box3 {
+    background-image: linear-gradient(
+        rgba(255, 255, 255, 0.3),
+        rgba(255, 255, 255, 0.3)
+      ),
+      url("../../Images/.Boxes/Xerox.png");
+  }
+  #Box5 {
+    background-image: linear-gradient(
+        rgba(255, 255, 255, 0.3),
+        rgba(255, 255, 255, 0.3)
+      ),
+      url("../../Images/.Boxes/Stationery.png");
+  }
+  #Box6 {
+    background-image: linear-gradient(
+        rgba(255, 255, 255, 0.3),
+        rgba(255, 255, 255, 0.3)
+      ),
+      url("../../Images/.Boxes/Spiral.jpg");
+  }
+  #Box4 {
+    background-image: linear-gradient(
+        rgba(255, 255, 255, 0.3),
+        rgba(255, 255, 255, 0.3)
+      ),
+      url("../../Images/.Boxes/LetterHead.png");
+  }
+  #Box9 {
+    background-image: linear-gradient(
+        rgba(255, 255, 255, 0.3),
+        rgba(255, 255, 255, 0.3)
+      ),
+      url("../../Images/.Boxes/DTP.jpg");
+  }
+
+  @media only screen and (max-width: 700px){
+    
+    .Box{
+        height: 20vh;
+        line-height: 20vh;
+        width: 100vw;
+        font-size: 4vh;
+    }
+    .Box:hover{
+        line-height: 30vh;
+        font-size: 5vh;
+    }
+
+  }
+  
+  /* Main Body */
+  .MainBody {
+    margin: 0px;
+  }
+  .Heading {
+    /* text-decoration: underline; */
+    font-weight: bold;
+    color: #6e0000;
+    margin: 30px 0px 10px 0px;
+  }
+  .Head {
+    text-align: center;
+    font-size: 3rem;
+    font-family: "Gwendolyn", cursive;
+    animation: Services 1s ease-out 0s 1 normal forwards;
+  }
+  @keyframes Services {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }

@@ -1,0 +1,161 @@
+  /* Annoucement Section */
+  .News {
+    /* border: 2px solid green; */
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    justify-content: space-evenly;
+  }
+  .NewsBox {
+    display: flex;
+    flex-flow: column wrap;
+    flex-grow: 1/4;
+    align-items: center;
+    justify-content: flex-start;
+    height: 477.4px;
+    /* width: 20vw; */
+    min-width: 250px;
+    max-width: 300px;
+    margin: 10px;
+    margin-top: 60px;
+    box-sizing: border-box;
+    box-shadow: 0px 0px 10px 2px black;
+    position: relative;
+    gap: 0px;
+  }
+  @media only screen and (min-width: 810px) and (max-width: 1300px) {
+    #HideAnnc {
+      display: none;
+    }
+    .NewsBox {
+      width: 20vw !important;
+    }
+  }
+  @media only screen and (max-width: 809px) {
+    #HideAnnc {
+      display: flex;
+    }
+  }
+  .NewsBG {
+    background: rgb(255, 128, 93);
+    background: radial-gradient(
+      circle,
+      rgba(255, 128, 93, 1) 0%,
+      rgba(110, 0, 0, 1) 100%
+    );
+    width: 100%;
+    box-sizing: border-box;
+    margin: 0px;
+    text-align: center;
+    height: 120px;
+  }
+  .NewsPhoto {
+    width: 150px;
+    box-sizing: border-box;
+    padding: 64px;
+    /* z-index: -1; */
+    position: relative;
+    top: -50px;
+    margin: auto;
+    background-color: yellowgreen;
+    background-image: url(../../Images/.DMS/Open.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    border-radius: 50%;
+    border: 10px solid #f4ede7;
+  }
+  #NewsPhoto-2{
+    background-image: url(../../Images/.DMS/Stocks.png);
+  }
+  #NewsPhoto-3{
+    background-image: url(../../Images/.DMS/New.png);
+  }
+  #NewsPhoto-4{
+    background-image: url(../../Images/.DMS/Annoucement.png);
+  }
+  .AnncStrt {
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+  }
+  .NewsHead {
+    margin-top: 10px;
+    margin-left: 10px;
+    padding-left: 10px;
+    font-family: "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana,
+      sans-serif;
+  }
+  .NewsHead span {
+    color: green;
+  }
+  #Outstocks {
+    color: red;
+  }
+  #Instocks {
+    color: green;
+  }
+  .NewsData {
+    border: 2px solid #6e0000;
+    padding: 20px;
+    border-radius: 10px;
+    margin: 15px 30px 20px 30px;
+    padding-top: 10px;
+    font-family: "Segoe UI";
+    margin-bottom: 10px;
+    max-height: 180px;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+  .NewsData::-webkit-scrollbar {
+    width: 12px;
+    display: block;
+  }
+  
+  .NewsData::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px #813535;
+    border-radius: 10px;
+    background: transparent;
+  }
+  .NewsData::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    box-shadow: inset 0 0 6px #915858;
+  }
+  
+  .NewsData ul {
+    margin-left: 20px;
+    /* padding: 50px; */
+  }
+  .LearnMore {
+    font-size: 1.1rem;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    cursor: pointer;
+    transition: all;
+    transition-duration: 0.25s;
+    /* padding: 5px; */
+    margin-bottom: 10px;
+    box-sizing: border-box;
+    position: absolute;
+    bottom: 20px;
+  }
+  #NoAnnoucement {
+    opacity: 0;
+    cursor: default;
+  }
+  .LearnMore:hover {
+    transform: scale(1.1);
+  }
+  .NewsBottom {
+    background-color: #6e0000;
+    height: 20px;
+    width: 100%;
+    position: absolute;
+    bottom: 0px;
+  }
+  
+  @media only screen and (max-width: 700px){
+      .NewsBox{
+        width: 80vw;
+        max-width: 200px;
+        }
+    }
+    

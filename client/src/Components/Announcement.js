@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react"
+import './Styles/Annoucement.css';
+const localDB = require('../Database/localDB');
 
 const Announcement = () => {
 
     const [News,setNews] = useState(null);
     
     useEffect( ()=>{
-        fetch("http://localhost:8000/Annoucement")
-        .then(res => res.json())
-        .then(data => setNews(data));
+        setNews(localDB.Annoucement);
     },[]);
     
     const DisplayNews = () => {

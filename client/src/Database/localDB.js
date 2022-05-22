@@ -1,4 +1,4 @@
-{
+module.exports = {
     "Offer" : [
         {"content": "Registers", "id": "Box1"},
         {"content": "Rubber Stamp", "id": "Box2"},
@@ -12,10 +12,10 @@
     ],
 
     "Annoucement" : [
-        {"headContent": "The Shop is <span id='open'>open...</span>", "mainContent": "<p class='NewsInfo'> The Shop will remain opened during the following hours. <br/><br/> <strong> Sunday: </strong> Close for Complete Day. (Services may be available on demand) <br/> <strong> Regular Days</strong> : 09:00 AM to 21:00 PM </p> ", "key": 1, "id": "ShowAnnc"},
-        {"headContent": "Items not in <span id='Outstocks'>stocks: </span>", "mainContent": "<p className='NewsInfo' The following items are currently not available <ul> <li>Namuna no. 23</li> <li>Namuna no. 26</li> <li>Pavti Pustak</li> <li>Namuna No. 8</li> <li>Tachapin</li> <li>Andaj Patrak</li> <li>Namuna no. 32</li> <li>Namuna no. 19</li> <li>Namuna no. 21</li> </ul> </p>", "key": 2, "id": "ShowAnnc" },
-        {"headContent": "New Item in <span id='Instocks'>stocks: </span>", "mainContent": "<p class='NewsInfo'>The following are the new items available <ul> <li>Namuna no. 8 Motha Shikha</li> <li>ABCXYZ</li> <li>Pavti Pustak</li> </ul> </p>", "key": 3, "id": "ShowAnnc" },
-        {"headContent": "No New <span id='Nostocks'>Annoucement </span>", "mainContent": "<p class='NewsInfo'>No new Annoucements are available as of today <ul>", "key": 4, "id": "HideAnnc" }
+        {"headContent": "The Shop is <span id='open'>open...</span>", "mainContent": "<p > The Shop will remain opened during the following hours. <br/><br/> <strong> Sunday: </strong> Close for Complete Day. (Services may be available on demand) <br/> <strong> Regular Days</strong> : 09:00 AM to 21:00 PM </p> ", "key": 1, "id": "ShowAnnc"},
+        {"headContent": "Items not in <span id='Outstocks'>stocks: </span>", "mainContent": "<p> The following items are currently not available <ul> <li>Namuna no. 23</li> <li>Namuna no. 26</li> <li>Pavti Pustak</li> <li>Namuna No. 8</li> <li>Tachapin</li> <li>Andaj Patrak</li> <li>Namuna no. 32</li> <li>Namuna no. 19</li> <li>Namuna no. 21</li> </ul> </p>", "key": 2, "id": "ShowAnnc" },
+        {"headContent": "New Item in <span id='Instocks'>stocks: </span>", "mainContent": "<p >The following are the new items available <ul> <li>Namuna no. 8 Motha Shikha</li> <li>ABCXYZ</li> <li>Pavti Pustak</li> </ul> </p>", "key": 3, "id": "ShowAnnc" },
+        {"headContent": "No New <span id='Nostocks'>Annoucement </span>", "mainContent": "<p >No new Annoucements are available as of today <ul>", "key": 4, "id": "HideAnnc" }
     ],
 
     "Footer" : [

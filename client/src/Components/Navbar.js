@@ -1,4 +1,5 @@
 import {Link} from 'react-router-dom'
+import './Styles/Navbar.css';
 
 const Navbar = () => {
 
@@ -8,12 +9,10 @@ const Navbar = () => {
         if (x.className === "MobileLI") {
             document.getElementById("MobNav").className = 'AlternateMobileLI';
             bg_opacity.className = "MainBG opacity1"
-            // bg_opacity.style.opacity = "1";
         } else {
             x.style.display = "block";
             document.getElementById("MobNav").className = 'MobileLI';
             bg_opacity.className = "MainBG opacity0"
-            // bg_opacity.style.opacity = "0.2";
         }
 
         return false;

@@ -1,16 +1,12 @@
 import { useEffect, useState } from "react";
+import './Styles/Offer.css';
+const localDB = require('../Database/localDB');
 
 const Offer = () => {
     const [Boxes, setBoxes] = useState(null);
 
     useEffect(()=>{
-        fetch("http://localhost:8000/Offer")
-            .then(res=> {
-                return res.json()
-            })
-            .then(data =>{
-                setBoxes(data)
-            })
+        setBoxes(localDB.Offer);
     },[]);
 
     return ( 
