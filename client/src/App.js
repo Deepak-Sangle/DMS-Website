@@ -5,7 +5,7 @@ import Announcement from './Components/Announcement.js';
 import Footer from './Components/Footer.js';
 import Signin from './Components/Signin.js';
 import Signup from './Components/Signup.js';
-
+import ProtectedRoute from './Helper/ProtectedRoute.js';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 const App = () => {
@@ -13,13 +13,15 @@ const App = () => {
         <Router>
             <div className="App">
                 <Routes>
-                    <Route path='/' element={<>
-                        <Navbar />
-                        <MainBG />
-                        <Announcement/>
-                        <Offer />
-                        <Footer />
-                    </>} />
+                    <Route exact path='/' element={<ProtectedRoute/>}>
+                        <Route path='/' element={<>
+                            <Navbar />
+                            <MainBG />
+                            <Announcement/>
+                            <Offer />
+                            <Footer />
+                        </>} />
+                    </Route>
                     <Route path='/signin' element={<>
                         <Signin />
                     </>}/>

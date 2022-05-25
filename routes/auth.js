@@ -80,4 +80,8 @@ router.get('/failurejson', (req,res)=>{
     res.send(req.flash);
 });
 
+router.get('/checkauth', checkAuthenticated, (req,res)=>{
+    return res.status(200).send({"isAuthenticated" : true});    
+});
+
 module.exports = router;

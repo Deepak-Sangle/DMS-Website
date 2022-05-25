@@ -4,7 +4,7 @@ function checkAuthenticated(req, res, next) {
     }
     else
         // return res.redirect('/signin');
-        res.status(200).send({"isAuthenticated" : false});    
+        return res.status(200).send({"isAuthenticated" : false});    
     
 }
 
