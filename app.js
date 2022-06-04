@@ -23,7 +23,7 @@ mongoose.connection.on('error',(err)=>{
 //Middleware Functions
 // app.use(express.static('public'));
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: false }));
 
 const initPassport = require('./passport-config');
 initPassport(passport, (email) => {
@@ -45,6 +45,7 @@ app.use(passport.session());
 
 //Route Requests
 app.use(require('./routes/auth'));
+app.use(require('./routes/item'));
 
 //Listen Port
 app.listen(PORT, (req,res)=>{

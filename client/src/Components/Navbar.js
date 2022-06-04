@@ -1,7 +1,10 @@
-import {Link} from 'react-router-dom'
+import {useEffect, useState} from 'react';
+import {Link} from 'react-router-dom';
 import './Styles/Navbar.css';
 
 const Navbar = () => {
+
+    const [user, setUser] = useState();
 
     function MobileNavigation() {
         var bg_opacity = document.getElementById("BGG");
@@ -38,6 +41,19 @@ const Navbar = () => {
         )
     }
     
+    const getData = async () =>{
+        const res = await fetch('./getdata');
+        const data = await res.json();       
+        if(data.isAuthenticated==false) {
+            alert("Hacked");
+        }
+        else setUser(data);
+    }
+
+    useEffect(()=>{
+        getData();
+    },[]);
+
     return ( 
         <div className="NavBar">
             <nav className="MobileNav">
@@ -63,10 +79,10 @@ const Navbar = () => {
                         </div>
                     </div>
                     <div className="dropDown">
-                        <li className="NavLi NavBarLi"><Link to="#"> SERVICES </Link></li>
+                        <li className="NavLi NavBarLi"><Link to="/services"> SERVICES </Link></li>
                         <div className="dropdownContent">
-                            <li className="first-list dropdownlist" ><Link to="#">All Registers</Link></li>
-                            <li className="dropdownlist" ><Link to="#">New Services</Link></li>
+                            <li className="first-list dropdownlist" ><Link to="#">All Services</Link></li>
+                            <li className="dropdownlist" ><Link to="#">All Registers</Link></li>
                             <li className="dropdownlist" ><Link to="#">Other Services</Link></li>
                         </div>
                     </div>
@@ -88,7 +104,7 @@ const Navbar = () => {
                     <div className="dropDown">
                         <li className="NavLi NavBarLi"><Link to="#"> ACCOUNT </Link></li>
                         <div className="dropdownContent">
-                            <li className="first-list dropdownlist" ><Link to="#">Deepak Sangle</Link></li>
+                            <li className="first-list dropdownlist" ><Link to="#">{user && user.name}</Link></li>
                             <li className="dropdownlist" ><Link to="#">Sign out</Link></li>
                             <li className="dropdownlist" ><Link to="#">Cart</Link></li>
                             <li className="dropdownlist" ><Link to="#">Annoucement</Link></li>

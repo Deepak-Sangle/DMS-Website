@@ -84,4 +84,8 @@ router.get('/checkauth', checkAuthenticated, (req,res)=>{
     return res.status(200).send({"isAuthenticated" : true});    
 });
 
+router.get('/getdata', checkAuthenticated, (req,res)=> {
+    return res.status(200).send(req.user);
+});
+
 module.exports = router;

@@ -1,12 +1,11 @@
-import Navbar from './Components/Navbar.js';
-import MainBG from './Components/MainBG.js';
-import Offer from './Components/Offer.js';
-import Announcement from './Components/Announcement.js';
-import Footer from './Components/Footer.js';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+
 import Signin from './Components/Signin.js';
 import Signup from './Components/Signup.js';
 import ProtectedRoute from './Helper/ProtectedRoute.js';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import CheckNotAuthenticated from './Helper/CheckNotAuthenticated.js';
+import Homepage from './Screens/Homepage.js';
+import Services from './Screens/Services.js';
 
 const App = () => {
     return ( 
@@ -14,20 +13,18 @@ const App = () => {
             <div className="App">
                 <Routes>
                     <Route exact path='/' element={<ProtectedRoute/>}>
-                        <Route path='/' element={<>
-                            <Navbar />
-                            <MainBG />
-                            <Announcement/>
-                            <Offer />
-                            <Footer />
-                        </>} />
+                        <Route path='/' element={<Homepage />} />
                     </Route>
-                    <Route path='/signin' element={<>
-                        <Signin />
-                    </>}/>
-                    <Route path='/signup' element={<>
-                        <Signup />
-                    </>}/>
+                    <Route path='/signin' element={<CheckNotAuthenticated />}>
+                        <Route path='/signin' element={<Signin />} />
+                    </Route>
+                    <Route path='/signup' element={<CheckNotAuthenticated />}>
+                        <Route path='/signup' element={<Signup />} />
+                    </Route>
+                    <Route path='/services' element={<ProtectedRoute />}>
+                        <Route path='/services' element={<Services />} />
+                    </Route>
+
                 </Routes>
             </div>
         </Router>
