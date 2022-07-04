@@ -9,16 +9,15 @@ const itemSchema = mongoose.Schema({
         type : Number,
         required : true,
     },
-    source : {
-        type : String,
-        required : true,
+    img : {
+        data : Buffer,
+        contentType : String,
+        // required : true,
     },
     description : {
         type : Array,
         required : true,
     },
-    
-
 });
 
 const Item = mongoose.model("Item", itemSchema);
