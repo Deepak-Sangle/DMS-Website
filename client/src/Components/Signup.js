@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import  { useNavigate } from 'react-router-dom'
 import './Styles/Signin.css';
+import { Link } from "react-router-dom";
 
 const Signin = () => {
 	const navigate = useNavigate();
@@ -78,7 +79,7 @@ const Signin = () => {
 	
 		    <div className="right">
 		        <h5>Register </h5>
-		        <p>Already have an account? <a href="#">Login here.</a></p>
+		        <p>Already have an account? <Link to="/signin">Login here.</Link></p>
 				<form onSubmit={handleSubmit}>
 					<div className="inputs">
 						<input 

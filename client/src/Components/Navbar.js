@@ -1,6 +1,7 @@
 import {useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
 import './Styles/Navbar.css';
+import { navbarTopics, navbarAnchors } from '../Database/localDB';
 
 const Navbar = () => {
 
@@ -21,14 +22,6 @@ const Navbar = () => {
         return false;
     }
 
-    const Navbar = [
-        {content: 'Home', url:'Home.html', id: 1 },
-        {content: 'Services', url:'Pages.html', id: 2 },
-        {content: 'Prices', url:'Pages.html', id: 3 },
-        {content: 'About', url:'Pages.html', id: 4 },
-        {content: 'Account', url:'Pages.html', id: 5 }
-    ];
-
     const DisplayNavMobile = (props)=>{
         const navbar = props.navbar;
         
@@ -44,7 +37,7 @@ const Navbar = () => {
     const getData = async () =>{
         const res = await fetch('./getdata');
         const data = await res.json();       
-        if(data.isAuthenticated==false) {
+        if(data.isAuthenticated === false) {
             alert("Hacked");
         }
         else setUser(data);
@@ -66,51 +59,28 @@ const Navbar = () => {
             </nav>
 
             <div className="AlternateMobileLI" id="MobNav">
-                <DisplayNavMobile navbar = {Navbar.copyWithin()} />
+                <DisplayNavMobile navbar = {navbarTopics.copyWithin()} />
             </div>
         
             <nav className="Nav " id="TopNavHeight">
                 {/* <DisplayNavLaptop navbar = {Navbar}/> */}
                 <ul className="NavUl">
-                    <div className="dropDown">
-                        <li className="NavLi NavBarLi"><Link to="/"> HOME </Link></li>
-                        <div className="dropdownContent">
-
-                        </div>
-                    </div>
-                    <div className="dropDown">
-                        <li className="NavLi NavBarLi"><Link to="/services"> SERVICES </Link></li>
-                        <div className="dropdownContent">
-                            <li className="first-list dropdownlist" ><Link to="#">All Services</Link></li>
-                            <li className="dropdownlist" ><Link to="#">All Registers</Link></li>
-                            <li className="dropdownlist" ><Link to="#">Other Services</Link></li>
-                        </div>
-                    </div>
-                    <div className="dropDown">
-                        <li className="NavLi NavBarLi"><Link to="#"> PRICES </Link></li>
-                        <div className="dropdownContent">
-                            <li className="first-list dropdownlist" ><Link to="#">Price Lists</Link></li>
-                            <li className="dropdownlist" ><Link to="#">Order</Link></li>
-                        </div>
-                    </div>
-                    <div className="dropDown">
-                        <li className="NavLi NavBarLi"><Link to="#"> ABOUT </Link></li>
-                        <div className="dropdownContent">
-                            <li className="first-list dropdownlist" ><Link to="#">Address</Link></li>
-                            <li className="dropdownlist" ><Link to="#">Availability</Link></li>
-                            <li className="dropdownlist" ><Link to="/contact-us">Contact</Link></li>
-                        </div>
-                    </div>
-                    <div className="dropDown">
-                        <li className="NavLi NavBarLi"><Link to="#"> ACCOUNT </Link></li>
-                        <div className="dropdownContent">
-                            <li className="first-list dropdownlist" ><Link to="#">{user && user.name}</Link></li>
-                            <li className="dropdownlist" ><Link to="#">Sign out</Link></li>
-                            <li className="dropdownlist" ><Link to="#">Cart</Link></li>
-                            <li className="dropdownlist" ><Link to="#">Annoucement</Link></li>
-                        </div>
-                    </div>
-
+                    {navbarAnchors.map((anchor, ind)=> {
+                        return(
+                            <div key={anchor.id} className="dropDown">
+                                <li className="NavLi NavBarLi"><Link to="/services"> {anchor.heading} </Link></li>
+                                <div className="dropdownContent">
+                                    {ind !== navbarAnchors.length - 1 && anchor.subLinks.length > 0 && <li className="first-list dropdownlist" ><Link className='dropdownA' to={(anchor.subLinks)[0].href}>{(anchor.subLinks)[0].heading}</Link></li>}
+                                    {ind === navbarAnchors.length - 1 &&  <li className="first-list dropdownlist" ><Link className='dropdownA' to="#">{user && user.name}</Link></li>}
+                                    {anchor.subLinks.map((links, i)=> {
+                                        if(i > 0 || ind === navbarAnchors.length - 1) return(
+                                            <li key={links.id} className="dropdownlist" ><Link className='dropdownA' to={links.href}>{links.heading}</Link></li>
+                                        )
+                                    })}
+                                </div>
+                            </div>
+                        )
+                    })}
                 </ul>
             </nav>
 

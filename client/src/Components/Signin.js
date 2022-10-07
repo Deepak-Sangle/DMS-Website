@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import './Styles/Signin.css';
+import { Link } from "react-router-dom";
+
 const Signin = () => {
 
 	const navigate = useNavigate();
@@ -68,7 +70,7 @@ const Signin = () => {
 	
 		    <div className="right">
 		        <h5>Login </h5>
-		        <p>Don't have an account? <a href="#">Create Your Account.</a> It takes less than a minute</p>
+		        <p>Don't have an account? <Link to="/signup">Create Your Account.</Link> It takes less than a minute</p>
                 <form onSubmit={handleSubmit}>
                     <div className="inputs">
                     <input 

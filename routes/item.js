@@ -27,7 +27,8 @@ router.post('/create', checkAuthenticated, (req,res)=> {
 router.get('/getitems', checkAuthenticated, (req,res)=> {
     Item.find()
         .then((item)=> {
-            res.json({Item : item});
+            console.log(item);
+            res.json(item);
         })
         .catch((err)=> console.log(err));
 });

@@ -1,21 +1,9 @@
-import { useEffect, useState } from "react";
 import './Styles/Footer.css';
-const localDB = require('../Database/localDB');
+import { footerTopics } from "../Database/localDB";
 
 const Footer = () => {
     
-    const [links, setLinks] = useState();
-    const [quickLink1, setQuickLink1] = useState(null);
-    const [quickLink2, setQuickLink2] = useState(null);
-    const [quickLink3, setQuickLink3] = useState(null);
-
-    useEffect(()=>{
-        setLinks(localDB.Footer[0].links);
-        setQuickLink1(localDB.Footer[1].quickLink1);
-        setQuickLink2(localDB.Footer[2].quickLink2);
-        setQuickLink3(localDB.Footer[3].quickLink3);
-    },[]);
-
+    const links = footerTopics[0];
 
     const DisplayLinks = (props)=>{
         const Links = props.link;
@@ -49,15 +37,13 @@ const Footer = () => {
                         Quick Links:
                     </div>
                     <div className="MainLinks">
-                        <div className="Links" >
-                            <DisplayLinks link={quickLink1}/>
-                        </div>
-                        <div className="Links" >
-                            <DisplayLinks link={quickLink2}/>
-                        </div>
-                        <div className="Links" >
-                            <DisplayLinks link={quickLink3}/>
-                        </div>
+                        {[...Array(3).keys()].map((i)=> {
+                            return(
+                                <div key={i} className="Links" >
+                                    <DisplayLinks link={footerTopics[i+1]}/>
+                                </div>
+                            )
+                        })}
                     </div>
 
                 </div>

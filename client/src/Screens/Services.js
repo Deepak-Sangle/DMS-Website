@@ -29,10 +29,16 @@ const Services = () => {
     }
 
     const getData = async () => {
-        const res = await fetch('/getitems');
+        const res = await fetch('/getitems',  {
+			method : "GET",
+			credentials: "include",	
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json',
+			}
+		});
         const data = await res.json();
-        setItemList(data.Item);    
-        console.log('itemList', itemList);
+        setItemList(data.Item);
     }
 
     useEffect(()=> {
