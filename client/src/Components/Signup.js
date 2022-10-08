@@ -42,28 +42,6 @@ const Signin = () => {
 		}
 	}
 
-	const checkAuthentication = async ()=>{
-		const res = await fetch('/signup', {
-			method : "GET",
-			credentials: "include",	
-			headers: {
-				'Accept': 'application/json',
-				'Content-Type': 'application/json',
-			}
-		});
-		const data = await res.json();
-		if(res.status===200 && data.isAuthenticated){
-			navigate('/');
-		}
-		else if(res.status!==200){
-			alert("Some error occured. Please try again");
-		}
-	}
-
-	useEffect(()=>{
-		checkAuthentication();
-	},[])
-
     return (
         <div className="box-form">
 	        <div className="left">
@@ -71,38 +49,28 @@ const Signin = () => {
 	        	<h1>DMS</h1>
 	        	<p>A store where you can find everything you need for your village from registers to stationery items and much more</p>
 	        	<span>
-	        		<p>Register with Social Media</p>
 	        		<a href="#" className="google">Google</a>
 	        	</span>
 	        	</div>
 	        </div>
 	
 		    <div className="right">
-		        <h5>Register </h5>
+		        <h5>Sign Up </h5>
 		        <p>Already have an account? <Link to="/signin">Login here.</Link></p>
 				<form onSubmit={handleSubmit}>
 					<div className="inputs">
-						<input 
-							type="text" 
-							value={name} 
-							onChange={(e)=>setName(e.target.value)} 
-							placeholder="Username" 
-						/>
-						<br/>
 						<input 
 							type="email" 
 							value={email} 
 							onChange={(e)=>setEmail(e.target.value)} 
 							placeholder="Email ID" 
 						/>
-						<br/>
 						<input 
 							type="password"
 							value={password}
 							onChange={(e)=>setPassword(e.target.value)} 
 							placeholder="Password"
 						/>
-						<br/>
 						<input 
 							type="password" 
 							value={cpassword}
@@ -111,8 +79,6 @@ const Signin = () => {
 						/>
 					</div>
 			
-
-					<br/>
 					<div className="loginBtn">
 						<button className="forgetpass">Register</button>
 					</div>

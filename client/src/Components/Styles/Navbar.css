@@ -5,15 +5,18 @@
       height: 75vh !important;
     }
   }
-  /*Mobile Navigation Bar*/
+  /*Hamburger menu*/
   @media only screen and (min-width: 450px) {
     .MobileNav {
       display: none !important;
     }
   }
   .MobileNav {
-    background-color: rgb(0 0 0 / 90%);
+    background-color: black;
     text-align: end;
+  }
+  .MobileNavUl {
+    flex-flow: column wrap !important;
   }
   .hamburger {
     color: white;
@@ -24,7 +27,7 @@
     height: 4vh;
   }
   
-  label {
+  .MobileNav>label {
     text-align: end;
     display: flex;
     flex-direction: column;
@@ -33,7 +36,7 @@
     padding: 5px;
     padding-top: 10px;
   }
-  label span {
+  .MobileNav>label span {
     background: #fff;
     border-radius: 5px;
     height: 2px;
@@ -41,32 +44,33 @@
     transition: 0.6s cubic-bezier(0.68, -0.6, 0.32, 1.6);
   }
   
-  span:nth-of-type(1) {
+  .MobileNav span:nth-of-type(1) {
     width: 25%;
   }
-  span:nth-of-type(2) {
+  .MobileNav span:nth-of-type(2) {
     width: 50%;
   }
-  span:nth-of-type(3) {
+  .MobileNav span:nth-of-type(3) {
     width: 40%;
   }
-  input[type="checkbox"] {
+  .MobileNav input[type="checkbox"] {
     display: none;
   }
-  input[type="checkbox"]:checked ~ span:nth-of-type(1) {
+  .MobileNav input[type="checkbox"]:checked ~ span:nth-of-type(1) {
     transform-origin: bottom;
     transform: rotatez(45deg) translate(10px, 2px);
   }
-  input[type="checkbox"]:checked ~ span:nth-of-type(2) {
+  .MobileNav input[type="checkbox"]:checked ~ span:nth-of-type(2) {
     transform-origin: top;
     width: 30px;
     transform: translate(-7px, -3px) rotatez(-45deg);
   }
-  input[type="checkbox"]:checked ~ span:nth-of-type(3) {
+  .MobileNav input[type="checkbox"]:checked ~ span:nth-of-type(3) {
     transform-origin: bottom;
     width: 25%;
     transform: translate(-3px, -16px) rotatez(45deg);
   }
+  /* Mobile Navigation dropdown */
   .MobileLI {
     display: none;
     animation: MobNavg 0.6s ease-in-out 0s 1 forwards;
@@ -74,7 +78,7 @@
     position: absolute;
     z-index: +2;
     box-shadow: 0px -3px 17px 8px black;
-    background-color: #2c2c2c;
+    background-color: black;
     width: 100vw;
   }
   .AlternateMobileLI {
@@ -83,46 +87,36 @@
     transform-origin: top center;
     position: absolute;
     z-index: +2;
-    background-color: #2c2c2c;
+    background-color: black;
     width: 100vw;
   }
   @keyframes MobNavg {
     0% {
       opacity: 0;
-      height: 0vh;
+      /* height: 0vh; */
       transform: scaleY(0);
       /* transform-origin: bottom; */
     }
     100% {
       opacity: 1;
-      height: 28vh;
+      /* height: 28vh; */
       transform: scaleY(1);
       /* transform-origin: bottom; */
     }
   }
   @keyframes NavgClose {
     0% {
-      height: 28vh;
+      /* height: 28vh; */
       opacity: 1;
       transform: scaleY(1);
       /* transform-origin: bottom; */
     }
     100% {
-      height: 0vh;
+      /* height: 0vh; */
       opacity: 0;
       transform: scaleY(0);
       /* transform-origin: bottom; */
     }
-  }
-  .MobileNavUl {
-    flex-flow: column wrap !important;
-  }
-  .MobileNavLi {
-    margin: 1vh 0vw;
-  }
-  .MobileNavLi a {
-    color: white !important;
-    font-size: 3vh !important;
   }
   /*Laptop Navigation Bar*/
   .Nav {
@@ -131,14 +125,14 @@
     flex-flow: row wrap;
     justify-content: flex-end;
     background-color: black;
-    border-bottom: 2px solid black;
+    border: 2px solid black;
   }
   .Nav ul,
   .MobileNavUl {
     list-style: none;
     display: flex;
     flex-flow: row wrap;
-    justify-content: flex-end;
+    justify-content: center;
     align-items: flex-start;
     position: relative;
   }
@@ -149,13 +143,16 @@
     align-items: center;
   }
   .NavLi,
-  .Account,
-  .MobileNavLi {
-    font-size: max(1.35vw, 1.35vh);
+  .Account {
     font-family: "Acme", sans-serif;
     margin: 1vw 1vw;
-    width: 10vw;
-    cursor: pointer;
+    min-width: 70px;
+    width: 7vw;
+    max-width: 10vw;
+  }
+  .MobileNavLi {
+    font-family: "Acme", sans-serif;
+    margin: 0px 10px 10px 10px;
   }
   .Nav li a,
   .MobileNavLi a,
@@ -163,17 +160,21 @@
     color: white;
     text-decoration: none !important;
     display: flex;
+    font-size: min(2.5vw, 2.5vh);
     flex-flow: column wrap;
   }
   /* .Nav li a:hover, */
-  .NavLi:hover {
-    color: rgb(75, 75, 75);
+  .NavLi:hover .NavLiA {
+    color: rgb(48, 44, 44) !important;
   }
   
   @media only screen and (max-width: 1200px) {
-    .Nav li,
+    .Nav>li,
     .Account {
-      font-size: max(1.8vw, 1.8vh);
+      font-size: 1rem;
+    }
+    .dropdownA {
+      font-size: 0.7rem !important;
     }
   }
   /*DropDownMenu */
@@ -210,7 +211,7 @@
     border: 2px solid black;
     border-top: 0px !important;
     background-color: black;
-    padding: 8px;
+    padding: 1vw;
   }
   .first-list{
     border-top: 2px solid black !important;
@@ -247,8 +248,19 @@
         display: none;
     }
   }
-  @media only screen and (max-width: 700px){ 
+  @media only screen and (max-width: 600px){ 
     .NavBar{
         background-position: left bottom;
+    }
+  }
+  @media only screen and (min-width: 450px) and (max-width: 600px){
+    .Nav ul {
+      justify-content: center !important;
+    }
+    .Nav {
+      justify-content: center !important;
+    }
+    .NavLi {
+      align-items: center;
     }
   }

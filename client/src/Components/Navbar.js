@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
 import './Styles/Navbar.css';
-import { navbarTopics, navbarAnchors } from '../Database/localDB';
+import { navbarAnchors } from '../Database/localDB';
 
 const Navbar = () => {
 
@@ -12,11 +12,9 @@ const Navbar = () => {
         var x = document.getElementById("MobNav");
         if (x.className === "MobileLI") {
             document.getElementById("MobNav").className = 'AlternateMobileLI';
-            bg_opacity.className = "MainBG opacity1"
         } else {
             x.style.display = "block";
             document.getElementById("MobNav").className = 'MobileLI';
-            bg_opacity.className = "MainBG opacity0"
         }
 
         return false;
@@ -28,7 +26,7 @@ const Navbar = () => {
         return (
             <ul className="MobileNavUl">
                 {navbar.map((val)=>(
-                    <li id={val.content.toLowerCase()} key={val.id} className="MobileNavLi"><Link to={val.url}>{val.content.toUpperCase()}</Link></li>
+                    <li id={val.heading.toLowerCase()} key={val.id} className="MobileNavLi"><Link to={val.href}>{val.heading}</Link></li>
                 ))}
             </ul>
         )
@@ -59,7 +57,7 @@ const Navbar = () => {
             </nav>
 
             <div className="AlternateMobileLI" id="MobNav">
-                <DisplayNavMobile navbar = {navbarTopics.copyWithin()} />
+                <DisplayNavMobile navbar = {navbarAnchors} />
             </div>
         
             <nav className="Nav " id="TopNavHeight">
@@ -68,7 +66,7 @@ const Navbar = () => {
                     {navbarAnchors.map((anchor, ind)=> {
                         return(
                             <div key={anchor.id} className="dropDown">
-                                <li className="NavLi NavBarLi"><Link to="/services"> {anchor.heading} </Link></li>
+                                <li className="NavLi NavBarLi"><Link className='NavLiA' to={anchor.href}> {anchor.heading} </Link></li>
                                 <div className="dropdownContent">
                                     {ind !== navbarAnchors.length - 1 && anchor.subLinks.length > 0 && <li className="first-list dropdownlist" ><Link className='dropdownA' to={(anchor.subLinks)[0].href}>{(anchor.subLinks)[0].heading}</Link></li>}
                                     {ind === navbarAnchors.length - 1 &&  <li className="first-list dropdownlist" ><Link className='dropdownA' to="#">{user && user.name}</Link></li>}

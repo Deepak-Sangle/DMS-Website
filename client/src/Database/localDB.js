@@ -44,34 +44,27 @@ module.exports = {
             {name: "Contact Us", href: "#", id: 3}
         ]
     ],
-    "navbarTopics" : [
-        {content: 'Home', url:'Home.html', id: 1 },
-        {content: 'Services', url:'Pages.html', id: 2 },
-        {content: 'Prices', url:'Pages.html', id: 3 },
-        {content: 'About', url:'Pages.html', id: 4 },
-        {content: 'Account', url:'Pages.html', id: 5 }
-    ],
     "navbarAnchors" : [
-        {heading : "Home", subLinks : [], id : 1},
+        {heading : "Home", subLinks : [], id : 1, href : "#"},
         {heading : "Services", subLinks : [
             {heading : "All Services", href : "#", id : 1},
             {heading : "All Registers", href : "#", id : 2},
             {heading : "Other Services", href : "#", id : 3}
-        ], id : 2},
+        ], id : 2, href : "/services"},
         {heading : "Prices", subLinks : [
             {heading : "Price Lists", href : "#", id : 1},
             {heading : "Order", href : "#", id : 2}
-        ], id : 3},
+        ], id : 3, href : "#"},
         {heading : "About", subLinks : [
             {heading : "Address", href : "#", id : 1},
             {heading : "Availability", href : "#", id : 2},
             {heading : "Contact", href : "#", id : 3}
-        ], id : 4},
+        ], id : 4, href : "#"},
         {heading : "Account", subLinks : [
             {heading : "Sign out", href : "#", id : 1},
             {heading : "Cart", href : "#", id : 2},
             {heading : "Annoucement", href : "#", id : 3}
-        ], id : 5}
+        ], id : 5, href : "#"}
     ]
 
 }
