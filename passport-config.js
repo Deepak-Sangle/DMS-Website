@@ -17,6 +17,7 @@ function initPassport(passport, getUserbyEmail) {
                 return callback(null, user);
             }
             else {
+                console.log("wrongPass");
                 return callback(null, false, { "message": "Wrong username or password" });
             }
 

@@ -4,6 +4,7 @@ const passport = require("passport");
 const { checkNotAuthenticated, checkAuthenticated, isVerify } = require('../middlewares/authMiddleware');
 const router = express.Router();
 require("dotenv").config();
+const confirmEmail = require('../nodemailer-config');
 
 //Requiring Models Schemas
 const User = require('../models/user');
@@ -45,6 +46,7 @@ router.post('/signup', async (req, res) => {
                         res.status(500).send({ message: err });
                         return;
                     }
+                    // confirmEmail(user.name, user.email, user.confirmationCode);
                     res.status(200).send({"message" : "Success","isSuccess" : true });
                 });
             }
@@ -53,24 +55,20 @@ router.post('/signup', async (req, res) => {
 });
 
 router.get("/signin", checkNotAuthenticated, (req, res) => {
-    res.status(200).send({"isAuthenticated" : false});
+    const message = (req.flash('error'))[0];
+    res.status(200).send({message});
 });
-
-// router.post('/signin', (req,res,next)=>{
-//     passport.authenticate('local', (err,user,info) => {
-//         if(err) throw err;
-//         if(user) {
-//             res.send(user);
-//         }
-//         res.send(info);
-//     })(req,res,next);
-// });
 
 router.post('/signin', passport.authenticate('local', {
     successRedirect: '/successjson',
-    failureRedirect: '/failurejson',
+    failureRedirect: '/signin',
     failureFlash: true
 }));
+
+router.delete('/signout', (req, res) => {
+    req.logOut();
+    res.status(200).send({isSucess : true, message : "Logout Successfully"})
+});
 
 router.get('/successjson', (req,res)=>{
     res.status(200).send(req.user);
@@ -86,6 +84,26 @@ router.get('/checkauth', checkAuthenticated, (req,res)=>{
 
 router.get('/getdata', checkAuthenticated, (req,res)=> {
     return res.status(200).send(req.user);
+});
+
+router.get("/api/auth/confirm/:code", (req, res) => {
+    User.findOne({
+        confirmationCode: req.params.code,
+    })
+        .then((user) => {
+            if (!user) {
+                return res.status(404).send({ isSuccess : false, message: "User Not found." });
+            }
+            user.status = "Active";
+            user.save((err) => {
+                if (err) {
+                    res.status(500).send({ isSuccess : false, message: err });
+                    return;
+                }
+            });
+            res.status(200).send({isSuccess : true});
+        })
+        .catch((e) => console.log("error", e));
 });
 
 module.exports = router;

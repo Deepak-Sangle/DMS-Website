@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import './Styles/Signin.css';
-import { Link } from "react-router-dom";
 
 const Signin = () => {
 
@@ -36,6 +35,10 @@ const Signin = () => {
 	}
 
 	const handleSignUp = async (e) => {
+		if(name === "" || password === "" || cpassword === "" || email === ""){
+			alert("Enter all the fields");
+			return false;
+		}
 		if(password!=cpassword) {
 			alert("Password does not match");
 			return false;
@@ -50,11 +53,13 @@ const Signin = () => {
 			})
 		});
 		const data = await res.json();
-		if(res.status===200 && data.isSuccess==true) {
-			navigate('/signin');
+		if(res.status===200 && data.isSuccess === true) {
+			alert("Registration Succesfull");
+			switchToSignIn();
 		}
-		else if(res.status===200 && data.isSuccess==false){
-			navigate('/signin');
+		else if(res.status===200 && data.isSuccess === false){
+			alert("Email ID Already Registered");
+			switchToSignIn();
 		}
 		else{
 			alert("Some error occured. Please try again");

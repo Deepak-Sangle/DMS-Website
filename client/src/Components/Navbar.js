@@ -2,8 +2,11 @@ import {useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
 import './Styles/Navbar.css';
 import { navbarAnchors } from '../Database/localDB';
+import { useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
+
+    const navigate = useNavigate();
 
     const [user, setUser] = useState();
 
@@ -41,6 +44,17 @@ const Navbar = () => {
         else setUser(data);
     }
 
+    const handleSignout = async () => {
+        const res = await fetch('/signout', {
+            method : "DELETE",
+            headers : {
+				"Content-Type" : "application/json"
+			}
+        });
+		const data = await res.json();
+        navigate('/signin');
+    }
+
     useEffect(()=>{
         getData();
     },[]);
@@ -71,8 +85,11 @@ const Navbar = () => {
                                     {ind !== navbarAnchors.length - 1 && anchor.subLinks.length > 0 && <li className="first-list dropdownlist" ><Link className='dropdownA' to={(anchor.subLinks)[0].href}>{(anchor.subLinks)[0].heading}</Link></li>}
                                     {ind === navbarAnchors.length - 1 &&  <li className="first-list dropdownlist" ><Link className='dropdownA' to="#">{user && user.name}</Link></li>}
                                     {anchor.subLinks.map((links, i)=> {
-                                        if(i > 0 || ind === navbarAnchors.length - 1) return(
+                                        if(links.href !== "/signout" && (i > 0 || ind === navbarAnchors.length - 1)) return(
                                             <li key={links.id} className="dropdownlist" ><Link className='dropdownA' to={links.href}>{links.heading}</Link></li>
+                                        )
+                                        if(links.href === "/signout") return (
+                                            <li key={links.id} onClick={handleSignout} className="dropdownlist" ><span className='dropdownA'>{links.heading}</span></li>
                                         )
                                     })}
                                 </div>

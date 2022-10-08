@@ -61,9 +61,9 @@ module.exports = {
             {heading : "Contact", href : "#", id : 3}
         ], id : 4, href : "#"},
         {heading : "Account", subLinks : [
-            {heading : "Sign out", href : "#", id : 1},
-            {heading : "Cart", href : "#", id : 2},
-            {heading : "Annoucement", href : "#", id : 3}
+            {heading : "Cart", href : "#", id : 1},
+            {heading : "Annoucement", href : "#", id : 2},
+            {heading : "Sign out", href : "/signout", id : 3}
         ], id : 5, href : "#"}
     ]
 

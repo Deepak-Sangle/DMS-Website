@@ -17,6 +17,11 @@ const userSchema = new mongoose.Schema({
         type: String,
         unique: true 
     },
+    status: {
+        type: String, 
+        enum: ['Pending', 'Active'],
+        default: 'Pending'
+    },
     DP : {
         type : String,
     }
