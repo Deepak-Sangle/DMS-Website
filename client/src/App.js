@@ -19,7 +19,6 @@ const App = () => {
                     <Route path='/' element={<CheckNotAuthenticated />}>
                         <Route path='/signin' element={<Signin />} />
                     </Route>
-                    <Route path='/loading' element={<Loader7 />} />
                 </Routes>
             </div>
         </Router>

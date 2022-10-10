@@ -4,7 +4,7 @@ const passport = require("passport");
 const { checkNotAuthenticated, checkAuthenticated, isVerify } = require('../middlewares/authMiddleware');
 const router = express.Router();
 require("dotenv").config();
-const confirmEmail = require('../nodemailer-config');
+const sendEmail = require('../nodemailer-config');
 
 //Requiring Models Schemas
 const User = require('../models/user');
@@ -20,18 +20,13 @@ router.get('/signup', checkNotAuthenticated, (req,res)=>{
 });
 
 router.post('/signup', async (req, res) => {
-    const characters = 'lbjksdfih327t6234kbjsfd98bf56gr/*3r=-d[;..,/.,g5ggsa4dsyjnbgsg2egsg1';
-    let token = '';
-    for (let i = 0; i < 25; i++) {
-        token += characters[Math.floor(Math.random() * characters.length )];
-    }
     const { name, email, password } = req.body;
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = new User({
         name,
         email,
         password: hashedPassword,
-        confirmationCode: token
+        confirmationCode: ""
     });
     User.findOne({email:email})
         .then((savedUser)=>{
@@ -46,7 +41,6 @@ router.post('/signup', async (req, res) => {
                         res.status(500).send({ message: err });
                         return;
                     }
-                    // confirmEmail(user.name, user.email, user.confirmationCode);
                     res.status(200).send({"message" : "Success","isSuccess" : true });
                 });
             }
@@ -61,7 +55,7 @@ router.get("/signin", checkNotAuthenticated, (req, res) => {
 
 router.post('/signin', passport.authenticate('local', {
     successRedirect: '/successjson',
-    failureRedirect: '/signin',
+    failureRedirect: '/failurejson',
     failureFlash: true
 }));
 
@@ -75,7 +69,9 @@ router.get('/successjson', (req,res)=>{
 });
 
 router.get('/failurejson', (req,res)=>{
-    res.send(req.flash);
+    const message = req.flash('error');
+    const needVerification = (message == "Email ID is not verified") ? true : false;
+    res.send({needVerification, message });
 });
 
 router.get('/checkauth', checkAuthenticated, (req,res)=>{
@@ -84,6 +80,70 @@ router.get('/checkauth', checkAuthenticated, (req,res)=>{
 
 router.get('/getdata', checkAuthenticated, (req,res)=> {
     return res.status(200).send(req.user);
+});
+
+router.post('/send-otp', async (req, res)=> {
+    const characters = 'lbjksdfih327t6234kbABHCUIIHGYSUJjsfd98bf56gr3rdg5ggsa4dsyjnbgsg2egsg1';
+    let token = '';
+    for (let i = 0; i < 6; i++) {
+        token += characters[Math.floor(Math.random() * characters.length )];
+    }
+
+    const {email, password} = req.body;
+    const savedUser = await User.findOne({email : email})
+    if(!savedUser){
+        res.status(200).send({isSuccess : false, message : "Something went wrong! Login again"});
+    }
+    else{
+        const match = await bcrypt.compare(password, savedUser.password);
+        if(match){
+            sendEmail(email, token);
+            savedUser.confirmationCode = token;
+            savedUser.save((err)=> {
+                if(err) {
+                    console.log(err);
+                    res.status(200).send({isSuccess : false, message : "Something went wrong! Login again"});
+                }
+                else{
+                    res.status(200).send({isSuccess : true});
+                } 
+            })
+        }
+        else{
+            res.status(200).send({isSuccess : false, message : "Something went wrong! Login again"})    
+        }
+    }
+});
+
+router.post('/verify-otp', async (req,res)=> {
+    const {email, password, otp} = req.body;
+    const savedUser = await User.findOne({email : email})
+    if(!savedUser){
+        res.status(200).send({isSuccess : false, message : "Something went wrong! Login again"});
+    }
+    else{
+        const match = await bcrypt.compare(password, savedUser.password);
+        if(match){
+            if(otp == savedUser.confirmationCode){
+                savedUser.status = "Active";
+                savedUser.save((err)=> {
+                    if(err){
+                        console.log(err);
+                        res.status(200).send({isSuccess : false, message : "Something went wrong! Login again"})        
+                    }
+                    else{
+                        res.status(200).send({isSuccess : true});
+                    }
+                })
+            }
+            else{
+                res.status(200).send({isSuccess : false, message : "OTP Does not match"});
+            }
+        }
+        else{
+            res.status(200).send({isSuccess : false, message : "Something went wrong! Login again"})    
+        }
+    }
 });
 
 router.get("/api/auth/confirm/:code", (req, res) => {

@@ -89,7 +89,7 @@ const Navbar = () => {
                                             <li key={links.id} className="dropdownlist" ><Link className='dropdownA' to={links.href}>{links.heading}</Link></li>
                                         )
                                         if(links.href === "/signout") return (
-                                            <li key={links.id} onClick={handleSignout} className="dropdownlist" ><span className='dropdownA'>{links.heading}</span></li>
+                                            <li key={links.id} onClick={handleSignout} className="dropdownlist" ><div className='dropdownA'>{links.heading}</div></li>
                                         )
                                     })}
                                 </div>

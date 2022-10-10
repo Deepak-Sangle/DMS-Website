@@ -11,8 +11,14 @@ const Signin = () => {
 	const [isSignin, setIsSignin] = useState(true);
 	const [password,setPassword] = useState("");
 	const [email,setEmail] = useState("");
+	const [isVerify, setIsVerify] = useState();
+	const [otp, setOtp] = useState("");
 
-	const handleSignIn = async (e) => {
+	const signIn = document.getElementById("signIn");
+	const verify = document.getElementById("verify");
+	const signUp = document.getElementById("signUp");
+
+	const handleSignIn = async () => {
 		const res = await fetch('/signin', {
 			method : "POST",
 			headers : {
@@ -25,20 +31,23 @@ const Signin = () => {
 		const data = await res.json();
 		if(res.status===200 && data.message===undefined) {
 			navigate('/');
-		} 
+		}
 		else if(res.status===200 && data.message!==undefined) {
-			alert(data.message);
+			if(data.needVerification){
+				signUp.style.display = "none";
+				verify.style.display = "inline-block";
+				moveUp(signIn, verify);
+			}
+			else{
+				alert(data.message);
+			}
 		}
 		else {
 			alert("Some error occured. Please try again");
 		}
 	}
 
-	const handleSignUp = async (e) => {
-		if(name === "" || password === "" || cpassword === "" || email === ""){
-			alert("Enter all the fields");
-			return false;
-		}
+	const handleSignUp = async () => {
 		if(password!=cpassword) {
 			alert("Password does not match");
 			return false;
@@ -54,11 +63,14 @@ const Signin = () => {
 		});
 		const data = await res.json();
 		if(res.status===200 && data.isSuccess === true) {
-			alert("Registration Succesfull");
-			switchToSignIn();
+			signIn.style.display = "none";
+			verify.style.display = "inline-block";
+			moveDown(verify, signUp);
 		}
 		else if(res.status===200 && data.isSuccess === false){
 			alert("Email ID Already Registered");
+			signIn.style.display = "inline-block";
+			verify.style.display = "none";
 			switchToSignIn();
 		}
 		else{
@@ -80,20 +92,84 @@ const Signin = () => {
 		}
 	}
 
+	function moveUp(elemA, elemB) {
+		elemA.className = "right move-up-signin";
+		elemB.className = "right move-up-signup";
+	}
+
+	function moveDown(elemA, elemB) {
+		elemA.className = "right move-down-signin";
+		elemB.className = "right move-down-signup";
+	}
+
 	const switchToSignUp = () => {
 		setIsSignin(false);
-		const signIn = document.getElementById("signIn");
-		const signUp = document.getElementById("signUp");
-		signIn.className = "right move-up-signin";
-		signUp.className = "right move-up-signup";
+		moveUp(signIn, signUp);
 	}
 	
 	const switchToSignIn = () => {
 		setIsSignin(true);
-		const signIn = document.getElementById("signIn");
-		const signUp = document.getElementById("signUp");
-		signIn.className = "right move-down-signin";
-		signUp.className = "right move-down-signup";
+		moveDown(signIn, signUp);
+	}
+
+	const sendOtpEmail = async ()=> {
+		const res = await fetch('/send-otp', {
+			method : "POST",
+			headers : {
+				"Content-Type" : "application/json"
+			},
+			body : JSON.stringify({email, password})
+		});
+		const data = await res.json();
+		console.log(data);
+		if(res.status === 200){
+			if(!data.isSuccess){
+				alert(data.message);
+				if(signIn.style.display == "none"){
+					signIn.style.display = "inline-block";
+					signUp.style.display = "none";
+				}
+				moveUp(verify, signIn);
+			}
+			else{
+				alert("Otp Sent");
+			}
+		}
+		else{
+			alert("Something went wrong");
+		}
+	}
+
+	const VerifyOtp = async (e) => {
+		e.preventDefault();
+		if(otp == ""){
+			alert("Please Enter valid otp");
+			return false;
+		}
+		const res = await fetch('/verify-otp', {
+			method : "POST",
+			headers : {
+				"Content-Type" : "application/json"
+			},
+			body : JSON.stringify({email, password, otp})
+		});
+		const data = await res.json();
+		if(res.status === 200){
+			if(data.isSuccess){
+				handleSignIn();
+			}
+			else{
+				alert(data.message);
+				if(signIn.style.display == "none"){
+					signIn.style.display = "inline-block";
+					signUp.style.display = "none";
+				}
+				moveUp(signIn, verify);
+			}
+		}
+		else{
+			alert("Something went wrong");
+		}
 	}
 
     return (
@@ -138,6 +214,26 @@ const Signin = () => {
 						</div>
 					</form>
 				</div>
+				
+				<div id="verify" className="right">
+					<h5>Verify Email</h5>
+					<div>Please Verify your email ID by clicking <span className="create-span" onClick={sendOtpEmail}>here</span></div>
+					<div id="email-div">Email : <span id="email-span">{email}</span></div>
+					<form onSubmit={VerifyOtp}>
+						<div className="inputs">
+							<input 
+								type="text" 
+								value={otp} 
+								onChange={(e)=>setOtp(e.target.value)} 
+								placeholder="OTP" 
+							/>
+						</div>
+
+						<div className="loginBtn">
+							<button className="forgetpass">Verify</button>
+						</div>
+					</form>
+				</div>
 
 				<div id="signUp" className="right">
 					<h5>Sign Up </h5>
@@ -175,6 +271,7 @@ const Signin = () => {
 						</div>
 					</form>
 				</div>
+
 			</div>
         </div>
     );

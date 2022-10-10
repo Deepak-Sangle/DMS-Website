@@ -42,7 +42,6 @@
       min-width: 0px !important;
     }
     .right{
-      display: inline-block !important;
       width: 100% !important;
       padding-top: 10px !important;
     }
@@ -101,6 +100,7 @@
     min-width: 400px;
   }
   .box-form .right {
+    display: inline-block;
     padding: 30px;
     height: 100%;
   }
@@ -133,7 +133,7 @@
     }
   }
   .box-form .right h5 {
-    font-size: max(5vw, 5vh);
+    font-size: max(4vw, 4vh);
     padding: 10px 0px;
   }
   #signIn {
@@ -141,6 +141,10 @@
   }
   #signUp {
     position: relative;
+  }
+  #verify{
+    position: relative;
+    display: none;
   }
   .box-form .right p {
     font-size: 14px;
@@ -207,4 +211,12 @@
 
   a {
     text-decoration: none;
+  }
+
+  #email-div{
+    margin-top: 10px;
+    font-size: 0.8rem;
+  }
+  #email-span{
+    font-weight: bold;
   }

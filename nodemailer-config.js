@@ -8,20 +8,28 @@ const transport = nodemailer.createTransport({
   },
 });
 
-function sendConfirmationEmail(name, email, confirmationCode) {
-    console.log(confirmationCode);
-  transport
-    .sendMail({
-      from: process.env.ADMIN_GMAIL,
-      to: email,
-      subject: "Please confirm your mIITK-KUTE account",
-      html: `<h1>Email Confirmation</h1>
-          <h2>Hello ${name}</h2>
-          <p>Thank you for Registering in DMS-WebApp. Please confirm your email by opening the following link in your browser</p>
-          <a href="http://localhost:3000/api/auth/confirm/${confirmationCode}">Click here</a>  
-          </div>`,
-    })
-    .catch((err) => console.log(err));
+function sendConfirmationEmail(email, otp) {
+    console.log(otp);
+    transport.sendMail({
+        from: process.env.ADMIN_GMAIL,
+        to: email,
+        subject: "Please confirm your mIITK-KUTE account",
+        html: `<h1>Email Confirmation</h1>
+            <h2>Hello ${email}$</h2>
+            <p>Thank you for Registering in DMS-WebApp. Here is the one time password for your verification of the email id.</p>
+            <br/>
+            <h3>${otp}</h3>
+            <br/>
+            <p>If the above request is not initiated by you please report it immediately by clicking <a href="localhost:3000/report/verification">here</a> </p>
+            </div>`,
+      }, (err, info)=> {
+        if(err) {
+          console.log(err);
+        }
+        else{
+          console.log("Email Sent: ", info);
+        }
+      });
 };
 
 module.exports = sendConfirmationEmail;

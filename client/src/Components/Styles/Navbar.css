@@ -155,6 +155,7 @@
     margin: 0px 10px 10px 10px;
   }
   .Nav li a,
+  .dropdownA,
   .MobileNavLi a,
   .NavLi {
     color: white;
