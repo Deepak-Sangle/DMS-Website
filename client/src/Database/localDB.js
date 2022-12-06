@@ -45,7 +45,7 @@ module.exports = {
         ]
     ],
     "navbarAnchors" : [
-        {heading : "Home", subLinks : [], id : 1, href : "#"},
+        {heading : "Home", subLinks : [], id : 1, href : "/"},
         {heading : "Services", subLinks : [
             {heading : "All Services", href : "#", id : 1},
             {heading : "All Registers", href : "#", id : 2},

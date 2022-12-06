@@ -3,6 +3,8 @@ import Footer from "../Components/Footer";
 import { useState, React, useEffect } from "react";
 import Searchbar from "../Components/Searchbar";
 import './Styles/Services.css';
+import img from '../Images/.TempImages/random3.jpg';
+import Offer from "../Components/Offer";
 
 const Services = () => {
 
@@ -18,11 +20,12 @@ const Services = () => {
         return (
             <div className="flex-row cardView">
                 <div className="imgDiv flex-row">
-                    <img src={source} className="img" alt="Loading..." />
+                    <img src={img} className="img" alt="Loading..." />
                 </div>
                 <div className="descriptionDiv">
                     <h2 className="name">{name}</h2>
                     <h3 className="price">Rs. {price}/-</h3>
+                    
                 </div>
             </div>
         )
@@ -38,7 +41,7 @@ const Services = () => {
 			}
 		});
         const data = await res.json();
-        setItemList(data.Item);
+        setItemList(data);
     }
 
     useEffect(()=> {
@@ -48,22 +51,23 @@ const Services = () => {
     return ( 
         <div>
             <Navbar />
-            <div className="searchBox">
+            {/* <div className="searchBox">
                 <Searchbar searchQuery={searchQuery} setSearchQuery={setSearchQuery} placeholder="Search your item" />
-            </div>
-            
-            <div className="flex-row">
+            </div> */}
+{/*             
+            {itemList!=undefined && <div className="flex-row">
                 <div className="leftBox">
                     
                 </div>
                 <div className="rightBox">
-                    {itemList.map((item)=> {
+                    {itemList.map((item, i)=> {
                         return(
-                            <ItemCard name={item.name} price={item.price} source={item.source} />
+                            <ItemCard key={i} name={item.name} price={item.price} source={item.source} />
                         )
                     })}
                 </div>
-            </div>
+            </div>} */}
+            <Offer />
             <Footer />
         </div>
     );

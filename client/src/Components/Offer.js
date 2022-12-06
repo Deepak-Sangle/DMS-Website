@@ -11,11 +11,6 @@ const Offer = () => {
 
     return ( 
     <div className="MainBody">
-        <div className="Heading">
-            <div className="Head">
-                What we Offer...
-            </div>
-        </div>
         <div className="Boxes">
             {Boxes && Boxes.map((box) => (
                 <div className="Box" id={box.id} key={box.id}> { box.content } </div>

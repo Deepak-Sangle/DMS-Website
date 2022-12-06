@@ -13,7 +13,7 @@ function sendConfirmationEmail(email, otp) {
     transport.sendMail({
         from: process.env.ADMIN_GMAIL,
         to: email,
-        subject: "Please confirm your mIITK-KUTE account",
+        subject: "Please confirm your DMS account",
         html: `<h1>Email Confirmation</h1>
             <h2>Hello ${email}$</h2>
             <p>Thank you for Registering in DMS-WebApp. Here is the one time password for your verification of the email id.</p>
