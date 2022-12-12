@@ -2,7 +2,7 @@ module.exports = {
     "Offer" : [
         {content: "Registers", id: "Box1"},
         {content: "Rubber Stamp", id: "Box2"},
-        {content: "Color Xerox", id: "Box3"},
+        {content: "Xerox", id: "Box3"},
         {content: "Letter Heads", id: "Box4"},
         {content: "Stationery", id: "Box5"},
         {content: "Spiral Binding", id: "Box6"},
@@ -47,8 +47,8 @@ module.exports = {
     "navbarAnchors" : [
         {heading : "Home", subLinks : [], id : 1, href : "/"},
         {heading : "Services", subLinks : [
-            {heading : "All Services", href : "#", id : 1},
-            {heading : "All Registers", href : "#", id : 2},
+            {heading : "All Services", href : "/services", id : 1},
+            {heading : "Registers", href : "#", id : 2},
             {heading : "Other Services", href : "#", id : 3}
         ], id : 2, href : "/services"},
         {heading : "Prices", subLinks : [
@@ -65,6 +65,11 @@ module.exports = {
             {heading : "Annoucement", href : "#", id : 2},
             {heading : "Sign out", href : "/signout", id : 3}
         ], id : 5, href : "#"}
+    ],
+    "horizontalCarousel" : [
+        {smallHeading : "GET ALL TYPES OF REGISTORS", heading : "REGISTORS", descirption : "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque vero enim illum? Reiciendis numquam soluta amet unde perspiciatis vero similique minima odit vel laudantium? Similique saepe minima consectetur culpa ", id : "1", imgType : "Register"},
+        {smallHeading : "ROUND AND SQUARE STAMP", heading : "STAMP", descirption : "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque vero enim illum? Reiciendis numquam soluta amet unde perspiciatis vero similique minima odit vel laudantium? SimiliLorem ipsum dolor sit amet consectetur adipisicing elit. Eaque vero enim illum? Reiciendis numquam soluta amet unde perspiciatis vero similique minima odit vel laudantium? Similique saepe minima consectetur culpa que saepe minima consectetur culpa ", id : "2", imgType : "Stamp"},
+        {smallHeading : "OFFSET IT", heading : "OFFSET PRINTING", descirption : "Lorem  vero similique minima odit vel laudantium? Similique saepe minima consectetur culpa ", id : "3", imgType : "Offset"},
     ]
 
 }
