@@ -48,6 +48,9 @@
     font-family: fantasy;
 } */
 
+::-webkit-scrollbar{
+    width: 0;
+}
 
 @media only screen and (max-width: 900px){
     .carousel_img_grid{

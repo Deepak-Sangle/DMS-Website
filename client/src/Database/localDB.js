@@ -70,6 +70,14 @@ module.exports = {
         {smallHeading : "GET ALL TYPES OF REGISTORS", heading : "REGISTORS", descirption : "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque vero enim illum? Reiciendis numquam soluta amet unde perspiciatis vero similique minima odit vel laudantium? Similique saepe minima consectetur culpa ", id : "1", imgType : "Register"},
         {smallHeading : "ROUND AND SQUARE STAMP", heading : "STAMP", descirption : "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque vero enim illum? Reiciendis numquam soluta amet unde perspiciatis vero similique minima odit vel laudantium? SimiliLorem ipsum dolor sit amet consectetur adipisicing elit. Eaque vero enim illum? Reiciendis numquam soluta amet unde perspiciatis vero similique minima odit vel laudantium? Similique saepe minima consectetur culpa que saepe minima consectetur culpa ", id : "2", imgType : "Stamp"},
         {smallHeading : "OFFSET IT", heading : "OFFSET PRINTING", descirption : "Lorem  vero similique minima odit vel laudantium? Similique saepe minima consectetur culpa ", id : "3", imgType : "Offset"},
+    ],
+    "topStationeryItems" : [
+        {dbName : "Tachapin", name : "Tachapin", description : "rem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi quibusdam ", price : 10, id : 1,},
+        {dbName : "Pen", name : "Pens", description : "rem ipsum dolor endi quibusdam ", price : 5, id : 2,},
+        {dbName : "Blank_Register", name : "Blank Registers", description : "rem ipsum dolor sit amrem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi quibusdam isicing elit. Eligendi quibusdam ", price : 100, id : 3,},
+        {dbName : "Stamp_Pad", name : "Stamp Pad", description : "rem ipsum dolit. Eligendi quibusdam ", price : 45, id : 4,},
+        {dbName : "Whitener", name : "Whitener", description : "remadipisicing elit. Eligendi quibusdam ", price : 60, id : 5,},
+        {dbName : "Scissor", name : "Scissor", description : "remadipisicing elit. Eligendi quibusdam ", price : 120, id : 8,},
     ]
 
 }

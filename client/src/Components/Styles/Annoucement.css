@@ -40,8 +40,8 @@
     background: rgb(255, 128, 93);
     background: radial-gradient(
       circle,
-      rgba(255, 128, 93, 1) 0%,
-      rgba(110, 0, 0, 1) 100%
+      rgb(81 79 78) 0%,
+      rgb(0 0 0) 100%
     );
     width: 100%;
     box-sizing: border-box;
@@ -57,7 +57,7 @@
     position: relative;
     top: -50px;
     margin: auto;
-    background-color: yellowgreen;
+    background-color: #8a8b88;
     background-image: url(../../Images/.DMS/Open.png);
     background-size: cover;
     background-repeat: no-repeat;
@@ -95,7 +95,7 @@
     color: green;
   }
   .NewsData {
-    border: 2px solid #6e0000;
+    border: 2px solid #1e1a1a;
     padding: 20px;
     border-radius: 10px;
     margin: 15px 30px 20px 30px;
@@ -112,13 +112,13 @@
   }
   
   .NewsData::-webkit-scrollbar-track {
-    box-shadow: inset 0 0 6px #813535;
+    box-shadow: inset 0 0 6px #09060600;
     border-radius: 10px;
     background: transparent;
   }
   .NewsData::-webkit-scrollbar-thumb {
     border-radius: 10px;
-    box-shadow: inset 0 0 6px #915858;
+    box-shadow: inset 0 0 6px black;
   }
   
   .NewsData ul {
@@ -145,7 +145,7 @@
     transform: scale(1.1);
   }
   .NewsBottom {
-    background-color: #6e0000;
+    background-color: #1e1a1a;
     height: 20px;
     width: 100%;
     position: absolute;
