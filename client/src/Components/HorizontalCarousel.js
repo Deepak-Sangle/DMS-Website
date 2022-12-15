@@ -13,7 +13,7 @@ const HorizontalCarousel = (props) => {
 
     return (
         <Grid container style={styles.carousel_div}>
-            <Grid item md={12} xs={12} style={{margin : "30px"}}>
+            <Grid item md={12} xs={12} style={{margin : "10px"}}>
                 <AutoPlaySwipeableViews enableMouseEvents>
                     {horizontalCarousel.map((service)=> {
                         return(

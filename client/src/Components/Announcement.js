@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react"
 import './Styles/Annoucement.css';
+import customStyles from "./Styles/customStyles";
 const localDB = require('../Database/localDB');
 
 const Announcement = () => {
@@ -42,9 +43,9 @@ const Announcement = () => {
     return (
         <div className="Annoucement">
             <div className="Heading">
-                <div className="Head">
-                    Annoucements
-                </div>
+            <div style={Object.assign({}, customStyles.heading, {margin : "20px 0px 0px 0px"}) }>
+                {"announcement".toUpperCase()} 
+            </div>
             </div>
             <DisplayNews/>
 

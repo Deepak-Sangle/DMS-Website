@@ -10,7 +10,9 @@
   } */
   .Center {
     text-align: center;
-    font-family: cursive;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    letter-spacing: 3px;
+    
     color: white;
     opacity: 0.8;
     font-size: 1.5rem;

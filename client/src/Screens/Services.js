@@ -3,11 +3,11 @@ import Footer from "../Components/Footer";
 import { useState, React, useEffect } from "react";
 import './Styles/Services.css';
 import Offer from "../Components/Offer";
-import {Link} from 'react-router-dom';
 import { horizontalCarousel } from "../Database/localDB";
 import HorizontalCarousel from "../Components/HorizontalCarousel";
-import MyCard from "../Components/Card";
 import { topStationeryItems } from "../Database/localDB";
+import StationeryCarousel from "../Components/StationeryCarousel";
+import customStyles from "../Components/Styles/customStyles";
 
 const Services = () => {
 
@@ -51,23 +51,11 @@ const Services = () => {
     //     getData();
     // }, []);
 
-    const StationeryCarousel = ()=> {
+    const BannerCarousel = ()=> {
         return(
             <div>
-                <div style={styles.heading}>
-                    {"Explore latest Stationeries".toUpperCase()} 
-                </div>
-                <div style={styles.stationeryScroll}>
-                    {topStationeryItems.map((item)=> {
-                        return(
-                            <div key={item.id} style={styles.scrollDiv}>
-                                <MyCard item={item} />
-                            </div>
-                        )
-                    })}
-                </div>
+
             </div>
-            
         )
     }
 
@@ -75,8 +63,18 @@ const Services = () => {
         <div>
             <Navbar />
             <Offer />
+            <div style={Object.assign({}, customStyles.heading, {margin : "20px 0px 0px 0px"}) }>
+                {"Best in class services".toUpperCase()} 
+            </div>
             <HorizontalCarousel data={horizontalCarousel} />
-            <StationeryCarousel />
+            <div style={Object.assign({}, customStyles.heading, {margin : "0px 0px 20px 0px"}) }>
+                {"Explore latest Stationeries".toUpperCase()} 
+            </div>
+            <StationeryCarousel data={topStationeryItems} />
+            <div style={Object.assign({}, customStyles.heading, {margin : "20px 0px 0px 0px"}) }>
+                {"get all the custom Banners for your village".toUpperCase()} 
+            </div>
+            <BannerCarousel />
             <Footer />
         </div>
     );
@@ -91,13 +89,6 @@ const styles = {
     scrollDiv : {
         padding : "10px 20px",
     },
-    heading : {
-        textAlign : "center",
-        marginBottom : "15px",
-        fontSize : "2rem",
-        fontFamily : "Segoe UI",
-        letterSpacing : "3px",   
-    }
 }
 
 export default Services;
