@@ -30,7 +30,6 @@ initPassport(passport, (email) => {
     return User.findOne({ email });
 });
 
-
 app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: true,

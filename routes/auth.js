@@ -65,13 +65,15 @@ router.delete('/signout', (req, res) => {
 });
 
 router.get('/successjson', (req,res)=>{
+    console.log(req.user);
     res.status(200).send(req.user);
 });
 
 router.get('/failurejson', (req,res)=>{
     const message = req.flash('error');
     const needVerification = (message == "Email ID is not verified") ? true : false;
-    res.send({needVerification, message });
+    console.log({needVerification, message });
+    res.status(200).send({needVerification, message });
 });
 
 router.get('/checkauth', checkAuthenticated, (req,res)=>{

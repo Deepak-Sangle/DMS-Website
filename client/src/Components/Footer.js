@@ -49,9 +49,9 @@ const Footer = () => {
                 </div>
 
                 <div className="Info">
-                    <span className="DPSpan">
+                    {/* <span className="DPSpan">
                         <img src={require("../Images/DP.jpg")} alt="" className="DP" />
-                    </span>
+                    </span> */}
                     <div className="Data">
                         <h2>
                             Hello...
@@ -60,7 +60,7 @@ const Footer = () => {
                         <p>
                             &emsp; &emsp; The above website is created by Deepak Sangle. He is a student currently studying
                             at IIT Kanpur in
-                            Computer Science Department in his 3rd year Undergraduate Programme. Feel free to connect to
+                            Computer Science Department in his Final year Undergraduate Programme. Feel free to connect to
                             him.
                         </p>
                     </div>

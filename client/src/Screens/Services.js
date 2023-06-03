@@ -53,8 +53,14 @@ const Services = () => {
 
     const BannerCarousel = ()=> {
         return(
-            <div>
-
+            <div style={styles.stationeryScroll}>
+                {topStationeryItems.map((item)=> {
+                    return(
+                        <div key={item.id} style={styles.scrollDiv}>
+                            HEEH
+                        </div>
+                    )
+                })}
             </div>
         )
     }
