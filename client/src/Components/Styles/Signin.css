@@ -148,13 +148,10 @@
     font-size: max(4vw, 4vh);
     padding: 10px 0px;
   }
-  #signIn {
+  #signIn, #signUp {
     position: relative;
   }
-  #signUp {
-    position: relative;
-  }
-  #verify{
+  #verify, #forgot{
     position: relative;
     display: none;
   }

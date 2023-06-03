@@ -15,7 +15,6 @@ const userSchema = new mongoose.Schema({
     },
     confirmationCode: { 
         type: String,
-        unique: true 
     },
     status: {
         type: String, 

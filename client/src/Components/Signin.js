@@ -16,13 +16,16 @@ const Signin = () => {
 	const [email,setEmail] = useState("");
 	const [isVerify, setIsVerify] = useState();
 	const [otp, setOtp] = useState("");
+	
+	const states = ["Send OTP", "Verify OTP", "Set Password"];
+	const [forgotStates, setForgotStates] = useState(states[0]);
 
 	const signIn = document.getElementById("signIn");
 	const verify = document.getElementById("verify");
 	const signUp = document.getElementById("signUp");
+	const forgot = document.getElementById("forgot");
 
 	const validateEmailAddress = () => {
-		console.log("imnaolidaeujp");
 		const validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 		if (email.match(validRegex)) {
 			return true;
@@ -113,7 +116,7 @@ const Signin = () => {
 
 	const handleSignUp = async () => {
 		if(password!=cpassword) {
-			notify("Password does not match", "WARN");
+			notify("Password do not match", "WARN");
 			return false;
 		}
 		const res = await fetch('/signup', {
@@ -154,6 +157,26 @@ const Signin = () => {
 		}
 	}
 
+	const handleVerifyOtp = async (e) => {
+		e.preventDefault();
+		const res = await VerifyOtp();
+		console.log("verify otp = ", res);
+		if(res === true){
+			handleSignIn();
+ 			return true;
+		}
+		else{
+			return false;
+		}
+	}
+
+	const handleForgot = ()=> {
+		setIsSignin(false);
+		forgot.style.display = "block";
+		moveUp(signIn, forgot);
+		return true;
+	}
+
 	function moveUp(elemA, elemB) {
 		elemA.className = "right move-up-signin";
 		elemB.className = "right move-up-signup";
@@ -166,12 +189,26 @@ const Signin = () => {
 
 	const switchToSignUp = () => {
 		setIsSignin(false);
+		forgot.style.display = "none";
+		verify.style.display = "none";
+		signUp.style.display = "block";
 		moveUp(signIn, signUp);
 	}
 	
 	const switchToSignIn = () => {
 		setIsSignin(true);
+		forgot.style.display = "none";
+		verify.style.display = "none";
+		signIn.style.display = "block";
 		moveDown(signIn, signUp);
+	}
+
+	const RememberedPassword = () => {
+		signIn.style.display = "block";
+		signUp.style.display = "none";
+		setIsSignin(true);
+		moveDown(signIn, forgot);
+		return true;
 	}
 
 	const sendOtpEmail = async ()=> {
@@ -180,30 +217,25 @@ const Signin = () => {
 			headers : {
 				"Content-Type" : "application/json"
 			},
-			body : JSON.stringify({email, password})
+			body : JSON.stringify({email})
 		});
 		const data = await res.json();
-		console.log(data);
 		if(res.status === 200){
 			if(!data.isSuccess){
 				notify(data.message, "WARN");
-				if(signIn.style.display == "none"){
-					signIn.style.display = "block";
-					signUp.style.display = "none";
-				}
-				moveUp(verify, signIn);
 			}
 			else{
 				notify("Otp Sent", "SUCCESS");
+				return true;
 			}
 		}
 		else{
 			notify("Something went wrong", "ERROR");
 		}
+		return false;
 	}
 
-	const VerifyOtp = async (e) => {
-		e.preventDefault();
+	const VerifyOtp = async () => {
 		if(otp == ""){
 			notify("OTP cannot be empty", "WARN");
 			return false;
@@ -213,29 +245,91 @@ const Signin = () => {
 			headers : {
 				"Content-Type" : "application/json"
 			},
-			body : JSON.stringify({email, password, otp})
+			body : JSON.stringify({email, otp})
 		});
 		const data = await res.json();
 		if(res.status === 200){
 			if(data.isSuccess === true){
-				handleSignIn();
+				notify("OTP Verified Succesfully", "SUCCESS");
+				return true;
 			}
 			else{
 				notify(data.message, "WARN");
-				// if(signIn.style.display == "none"){
-				// 	signIn.style.display = "block";
-				// 	signUp.style.display = "none";
-				// }
-				// moveUp(signIn, verify);
+				return false;
+			}
+		}
+		else{
+			notify("Something went wrong", "ERROR");
+			return false;
+		}
+	}
+
+	const SetPassword = async () => {
+		if(password === "" || cpassword === "") {
+			notify("Missing Credentials", "WARN");
+			return false;
+		}
+		else if(cpassword !== password) {
+			notify("Password do not match", "WARN");
+			return false;
+		}
+		if(!validatePassword()) return false;
+		const res = await fetch('/set-password', {
+			method : "POST",
+			headers : {
+				"Content-Type" : "application/json"
+			},
+			body : JSON.stringify({email, password})
+		});
+		const data = await res.json();
+		if(res.status === 200){
+			if(data.isSuccess === true){
+				notify("Password Set Succesfully", "SUCCESS");
+				return true;
+			}
+			else{
+				notify(data.message, "WARN");
 			}
 		}
 		else{
 			notify("Something went wrong", "ERROR");
 		}
+		return false;
 	}
 
-	const ForgotPassword = () => {
-
+	const ForgotPassword = async (e) => {
+		e.preventDefault();
+		if(forgotStates === states[0]){
+			if(email === "") {
+				notify("Mising Credentials", "WARN");
+				return false;
+			}
+			if(!validateEmailAddress()) return false;
+			const res = await sendOtpEmail();
+			console.log(res);
+			if(res === true) {
+				setForgotStates(states[1]);
+				return true;
+			}
+		}
+		else if(forgotStates === states[1]){
+			const res = await VerifyOtp();
+			if(res === true) {
+				setForgotStates(states[2]);
+				return true;
+			}
+		}
+		else{
+			const res = await SetPassword();
+			if(res === true) {
+				signIn.style.display = "block";
+				signUp.style.display = "none";
+				setIsSignin(true);
+				moveDown(signIn, forgot);
+				return true;
+			}
+		}
+		return false;
 	}
 
     return (
@@ -254,26 +348,6 @@ const Signin = () => {
 
 					<div className="left-float">
 					
-					{/* <div id="forgot-password" className="right">
-							<h5>Forgot Password</h5>
-							<div>Please Verify your Email address</div>
-							<div id="email-div">Email : <span id="email-span">{email}</span></div>
-							<form onSubmit={ForgotPassword}>
-								<div className="inputs">
-									<input 
-										type="text" 
-										value={email} 
-										onChange={(e)=>setEmail(e.target.value)} 
-										placeholder="Email" 
-									/>
-								</div>
-
-								<div className="loginBtn">
-									<button className="forgetpass">Send OTP</button>
-								</div>
-							</form>
-						</div> */}
-
 						<div id="signIn" className="right">
 							<h5>Sign in </h5>
 							<div>Don't have an account? <span className="create-span" onClick={switchToSignUp}>Create Your Account</span></div>
@@ -294,11 +368,57 @@ const Signin = () => {
 								</div>
 
 								<div className="remember-me--forget-password">
-									<p className="forgetpass">Forgot password?</p>
+									<p onClick={handleForgot} className="forgetpass">Forgot password?</p>
 								</div>
 				
 								<div className="loginBtn">
 									<button className="forgetpass">Sign in</button>
+								</div>
+							</form>
+						</div>
+
+						<div id="forgot" className="right">
+							<h5>Forgot Password</h5>
+							{forgotStates === states[0] && <div>Please enter the registered Email Address</div>}
+							{forgotStates === states[1] && <div>Please enter the OTP</div>}
+							{forgotStates === states[2] && <div>Set new Password</div>}
+							<form onSubmit={ForgotPassword}>
+								<div className="inputs">
+									{forgotStates === states[0] && <input 
+										type="text" 
+										value={email} 
+										onChange={(e)=>setEmail(e.target.value)} 
+										placeholder="Email" 
+									/>}
+
+									{forgotStates === states[1] && <input 
+										type="text" 
+										value={otp} 
+										onChange={(e)=>setOtp(e.target.value)} 
+										placeholder="OTP" 
+									/>}
+
+									{forgotStates === states[2] && <input 
+										type="password" 
+										value={password} 
+										onChange={(e)=>setPassword(e.target.value)} 
+										placeholder="Password" 
+									/>}
+
+									{forgotStates === states[2] && <input 
+										type="password" 
+										value={cpassword} 
+										onChange={(e)=>setCpassword(e.target.value)} 
+										placeholder="Confirm Password" 
+									/>}
+								</div>
+
+								<div className="remember-me--forget-password">
+									<p onClick={RememberedPassword} className="forgetpass">Remembered? Go Back</p>
+								</div>
+
+								<div className="loginBtn">
+									<button className="forgetpass">{forgotStates}</button>
 								</div>
 							</form>
 						</div>
@@ -307,7 +427,7 @@ const Signin = () => {
 							<h5>Verify Email</h5>
 							<div>Please Verify your email ID by clicking <span className="create-span" onClick={sendOtpEmail}>here</span></div>
 							<div id="email-div">Email : <span id="email-span">{email}</span></div>
-							<form onSubmit={VerifyOtp}>
+							<form onSubmit={handleVerifyOtp}>
 								<div className="inputs">
 									<input 
 										type="text" 

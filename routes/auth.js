@@ -91,42 +91,38 @@ router.post('/send-otp', async (req, res)=> {
         token += characters[Math.floor(Math.random() * characters.length )];
     }
 
-    const {email, password} = req.body;
+    const {email} = req.body;
     const savedUser = await User.findOne({email : email})
     if(!savedUser){
-        res.status(200).send({isSuccess : false, message : "Something went wrong! Login again"});
+        res.status(200).send({isSuccess : false, message : "User is not registered with this Email Address"});
     }
     else{
-        const match = await bcrypt.compare(password, savedUser.password);
-        if(match){
-            sendEmail(email, token);
-            savedUser.confirmationCode = token;
-            savedUser.save((err)=> {
-                if(err) {
-                    console.log(err);
-                    res.status(200).send({isSuccess : false, message : "Something went wrong! Login again"});
-                }
-                else{
-                    res.status(200).send({isSuccess : true});
-                } 
-            })
-        }
-        else{
-            res.status(200).send({isSuccess : false, message : "Something went wrong! Login again"})    
-        }
+        sendEmail(email, token);
+        savedUser.confirmationCode = token;
+        savedUser.save((err)=> {
+            if(err) {
+                console.log(err);
+                res.status(200).send({isSuccess : false, message : "Something went wrong! Login again"});
+            }
+            else{
+                res.status(200).send({isSuccess : true});
+            } 
+        })
     }
 });
 
 router.post('/verify-otp', async (req,res)=> {
-    const {email, password, otp} = req.body;
+    const {email, otp} = req.body;
     const savedUser = await User.findOne({email : email})
     if(!savedUser){
-        res.status(200).send({isSuccess : false, message : "Something went wrong! Login again"});
+        res.status(200).send({isSuccess : false, message : "User is not registered with this Email Address"});
     }
     else{
-        const match = await bcrypt.compare(password, savedUser.password);
-        if(match){
-            if(otp == savedUser.confirmationCode){
+        if(otp == savedUser.confirmationCode){
+            if(savedUser.status == "Active") {
+                res.status(200).send({isSuccess : true});
+            }
+            else{
                 savedUser.status = "Active";
                 savedUser.save((err)=> {
                     if(err){
@@ -138,13 +134,32 @@ router.post('/verify-otp', async (req,res)=> {
                     }
                 })
             }
-            else{
-                res.status(200).send({isSuccess : false, message : "OTP Does not match"});
-            }
         }
         else{
-            res.status(200).send({isSuccess : false, message : "Something went wrong! Login again"})    
+            res.status(200).send({isSuccess : false, message : "OTP Does not match"});
         }
+    }
+});
+
+router.post('/set-password', async (req, res)=> {
+    const {email, password} = req.body;
+    const savedUser = await User.findOne({email : email})
+
+    if(!savedUser){
+        res.status(200).send({isSuccess : false, message : "User is not registered with this Email Address"});
+    }
+    else{
+        const hashedPassword = await bcrypt.hash(password, 10);
+        savedUser.password = hashedPassword;
+        savedUser.save((err)=> {
+            if(err) {
+                console.log(err);
+                res.status(200).send({isSuccess : false, message : "Something went wrong! Login again"});
+            }
+            else{
+                res.status(200).send({isSuccess : true});
+            } 
+        })
     }
 });
 
