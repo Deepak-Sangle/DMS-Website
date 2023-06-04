@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
+import { ThreeDots } from 'react-loader-spinner'
 
 import 'react-toastify/dist/ReactToastify.css';
 import './Styles/Signin.css';
@@ -16,14 +17,54 @@ const Signin = () => {
 	const [email,setEmail] = useState("");
 	const [isVerify, setIsVerify] = useState();
 	const [otp, setOtp] = useState("");
+	const [loading, setLoading] = useState(false);
 	
 	const states = ["Send OTP", "Verify OTP", "Set Password"];
 	const [forgotStates, setForgotStates] = useState(states[0]);
 
-	const signIn = document.getElementById("signIn");
-	const verify = document.getElementById("verify");
-	const signUp = document.getElementById("signUp");
-	const forgot = document.getElementById("forgot");
+	const signIn = useRef(null);
+  const verify = useRef(null);
+  const signUp = useRef(null);
+  const forgot = useRef(null);
+
+	useEffect(()=> {
+		signIn.current = document.getElementById("signIn");
+		verify.current = document.getElementById("verify");
+		signUp.current = document.getElementById("signUp");
+		forgot.current = document.getElementById("forgot");
+	}, [])
+
+	const htmlBodyForNewAccount = () => {
+		return {
+			subject : "Please confirm your DMS account", 
+			body : `
+				<h1>Email Confirmation</h1>
+				<h2>Hello ${email}$</h2>
+				<p>Thank you for Registering in DMS-WebApp. Here is the one time password for your verification of the email id.</p>
+				<br/>
+				<h3>${otp}</h3>
+				<br/>
+				<p>If the above request is not initiated by you please report it immediately by clicking <a href="localhost:3000/report/verification">here</a> </p>
+				</div>
+			`
+		}
+	}
+
+	const htmlBodyForNewPassword = () => {
+		return {
+			subject : "Request for new Password", 
+			body : `
+				<h1>Password Reset</h1>
+				<h2>Hello ${email}$</h2>
+				<p>You forgot your password? That's okay! Just Enter the OTP shown below to verify your Email Address and you are good to go.</p>
+				<br/>
+				<h3>${otp}</h3>
+				<br/>
+				<p>If the above request is not initiated by you please report it immediately by clicking <a href="localhost:3000/report/verification">here</a> </p>
+				</div>
+			`
+		}
+	}
 
 	const validateEmailAddress = () => {
 		const validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
@@ -85,6 +126,7 @@ const Signin = () => {
 	}
 
 	const handleSignIn = async () => {
+		setLoading(true);
 		const res = await fetch('/signin', {
 			method : "POST",
 			headers : {
@@ -95,15 +137,15 @@ const Signin = () => {
 			})
 		});
 		const data = await res.json();
-		console.log({res, data});
+		setLoading(false);
 		if(res.status===200 && data.message===undefined) {
 			navigate('/');
 		}
 		else if(res.status===200 && data.message!==undefined) {
 			if(data.needVerification === true){
-				signUp.style.display = "none";
-				verify.style.display = "block";
-				moveUp(signIn, verify);
+				signUp.current.style.display = "none";
+				verify.current.style.display = "block";
+				moveUp(signIn.current, verify.current);
 			}
 			else{
 				notify(data.message[0], "WARN");
@@ -115,6 +157,7 @@ const Signin = () => {
 	}
 
 	const handleSignUp = async () => {
+		setLoading(true);
 		if(password!=cpassword) {
 			notify("Password do not match", "WARN");
 			return false;
@@ -129,15 +172,16 @@ const Signin = () => {
 			})
 		});
 		const data = await res.json();
+		setLoading(false);
 		if(res.status===200 && data.isSuccess === true) {
-			signIn.style.display = "none";
-			verify.style.display = "block";
+			signIn.current.style.display = "none";
+			verify.current.style.display = "block";
 			moveDown(verify, signUp);
 		}
 		else if(res.status===200 && data.isSuccess === false){
 			notify("Email ID Already Registered", "WARN");
-			signIn.style.display = "block";
-			verify.style.display = "none";
+			signIn.current.style.display = "block";
+			verify.current.style.display = "none";
 			switchToSignIn();
 		}
 		else{
@@ -148,7 +192,6 @@ const Signin = () => {
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		if(!validateMissingCredentials() || !validateEmailAddress() || !validatePassword()) return false;
-		console.log("here");
 		if(isSignin){
 			handleSignIn();
 		}
@@ -159,8 +202,8 @@ const Signin = () => {
 
 	const handleVerifyOtp = async (e) => {
 		e.preventDefault();
+		if(loading === true) return false;
 		const res = await VerifyOtp();
-		console.log("verify otp = ", res);
 		if(res === true){
 			handleSignIn();
  			return true;
@@ -172,8 +215,8 @@ const Signin = () => {
 
 	const handleForgot = ()=> {
 		setIsSignin(false);
-		forgot.style.display = "block";
-		moveUp(signIn, forgot);
+		forgot.current.style.display = "block";
+		moveUp(signIn.current, forgot.current);
 		return true;
 	}
 
@@ -189,37 +232,39 @@ const Signin = () => {
 
 	const switchToSignUp = () => {
 		setIsSignin(false);
-		forgot.style.display = "none";
-		verify.style.display = "none";
-		signUp.style.display = "block";
-		moveUp(signIn, signUp);
+		forgot.current.style.display = "none";
+		verify.current.style.display = "none";
+		signUp.current.style.display = "block";
+		moveUp(signIn.current, signUp.current);
 	}
 	
 	const switchToSignIn = () => {
 		setIsSignin(true);
-		forgot.style.display = "none";
-		verify.style.display = "none";
-		signIn.style.display = "block";
-		moveDown(signIn, signUp);
+		forgot.current.style.display = "none";
+		verify.current.style.display = "none";
+		signIn.current.style.display = "block";
+		moveDown(signIn.current, signUp.current);
 	}
 
 	const RememberedPassword = () => {
-		signIn.style.display = "block";
-		signUp.style.display = "none";
+		signIn.current.style.display = "block";
+		signUp.current.style.display = "none";
 		setIsSignin(true);
-		moveDown(signIn, forgot);
+		moveDown(signIn.current, forgot.current);
 		return true;
 	}
 
-	const sendOtpEmail = async ()=> {
+	const sendOtpEmail = async (content)=> {
+		setLoading(true);
 		const res = await fetch('/send-otp', {
 			method : "POST",
 			headers : {
 				"Content-Type" : "application/json"
 			},
-			body : JSON.stringify({email})
+			body : JSON.stringify({email, content})
 		});
 		const data = await res.json();
+		setLoading(false);
 		if(res.status === 200){
 			if(!data.isSuccess){
 				notify(data.message, "WARN");
@@ -236,6 +281,7 @@ const Signin = () => {
 	}
 
 	const VerifyOtp = async () => {
+		setLoading(true);
 		if(otp == ""){
 			notify("OTP cannot be empty", "WARN");
 			return false;
@@ -248,6 +294,7 @@ const Signin = () => {
 			body : JSON.stringify({email, otp})
 		});
 		const data = await res.json();
+		setLoading(false);
 		if(res.status === 200){
 			if(data.isSuccess === true){
 				notify("OTP Verified Succesfully", "SUCCESS");
@@ -265,6 +312,7 @@ const Signin = () => {
 	}
 
 	const SetPassword = async () => {
+		setLoading(true);
 		if(password === "" || cpassword === "") {
 			notify("Missing Credentials", "WARN");
 			return false;
@@ -282,6 +330,7 @@ const Signin = () => {
 			body : JSON.stringify({email, password})
 		});
 		const data = await res.json();
+		setLoading(false);
 		if(res.status === 200){
 			if(data.isSuccess === true){
 				notify("Password Set Succesfully", "SUCCESS");
@@ -305,8 +354,7 @@ const Signin = () => {
 				return false;
 			}
 			if(!validateEmailAddress()) return false;
-			const res = await sendOtpEmail();
-			console.log(res);
+			const res = await sendOtpEmail(htmlBodyForNewPassword());
 			if(res === true) {
 				setForgotStates(states[1]);
 				return true;
@@ -322,14 +370,35 @@ const Signin = () => {
 		else{
 			const res = await SetPassword();
 			if(res === true) {
-				signIn.style.display = "block";
-				signUp.style.display = "none";
+				signIn.current.style.display = "block";
+				signUp.current.style.display = "none";
 				setIsSignin(true);
-				moveDown(signIn, forgot);
+				moveDown(signIn.current, forgot.current);
 				return true;
 			}
 		}
 		return false;
+	}
+
+	const LoadingButton = ({text}) => {
+		return (
+			<div className="loginBtn">
+				<button className="forgetpass">
+					{loading && 
+					<ThreeDots 
+						height="20"
+						width="40"
+						radius="9"
+						color="#ffffff"
+						ariaLabel="three-dots-loading"
+						wrapperStyle={{}}
+						visible={true}
+					/>
+					}
+					{!loading && <span>{text}</span>}
+				</button>
+			</div>
+		)
 	}
 
     return (
@@ -370,10 +439,9 @@ const Signin = () => {
 								<div className="remember-me--forget-password">
 									<p onClick={handleForgot} className="forgetpass">Forgot password?</p>
 								</div>
-				
-								<div className="loginBtn">
-									<button className="forgetpass">Sign in</button>
-								</div>
+
+								<LoadingButton text="Sign In" />
+
 							</form>
 						</div>
 
@@ -417,15 +485,14 @@ const Signin = () => {
 									<p onClick={RememberedPassword} className="forgetpass">Remembered? Go Back</p>
 								</div>
 
-								<div className="loginBtn">
-									<button className="forgetpass">{forgotStates}</button>
-								</div>
+								<LoadingButton text={forgotStates} />
+
 							</form>
 						</div>
 					
 						<div id="verify" className="right">
 							<h5>Verify Email</h5>
-							<div>Please Verify your email ID by clicking <span className="create-span" onClick={sendOtpEmail}>here</span></div>
+							<div>Please Verify your email ID by clicking <span className="create-span" onClick={() => sendOtpEmail(htmlBodyForNewAccount())}>here</span></div>
 							<div id="email-div">Email : <span id="email-span">{email}</span></div>
 							<form onSubmit={handleVerifyOtp}>
 								<div className="inputs">
@@ -437,9 +504,8 @@ const Signin = () => {
 									/>
 								</div>
 
-								<div className="loginBtn">
-									<button className="forgetpass">Verify</button>
-								</div>
+								<LoadingButton text="Verify" />
+
 							</form>
 						</div>
 
@@ -474,9 +540,8 @@ const Signin = () => {
 									/>
 								</div>
 				
-								<div className="loginBtn">
-									<button className="forgetpass">Sign Up</button>
-								</div>
+								<LoadingButton text="Sign Up" />
+
 							</form>
 						</div>
 

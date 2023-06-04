@@ -8,28 +8,29 @@ const transport = nodemailer.createTransport({
   },
 });
 
-function sendConfirmationEmail(email, otp) {
-    console.log(otp);
+const sendEmail = async  (email, otp, content)=> {
+  return new Promise((resolve, reject)=> {
     transport.sendMail({
-        from: process.env.ADMIN_GMAIL,
-        to: email,
-        subject: "Please confirm your DMS account",
-        html: `<h1>Email Confirmation</h1>
-            <h2>Hello ${email}$</h2>
-            <p>Thank you for Registering in DMS-WebApp. Here is the one time password for your verification of the email id.</p>
-            <br/>
-            <h3>${otp}</h3>
-            <br/>
-            <p>If the above request is not initiated by you please report it immediately by clicking <a href="localhost:3000/report/verification">here</a> </p>
-            </div>`,
-      }, (err, info)=> {
-        if(err) {
-          console.log(err);
-        }
-        else{
-          console.log("Email Sent: ", info);
-        }
-      });
+      from: process.env.ADMIN_GMAIL,
+      to: email,
+      subject: content.subject,
+      html: content.body,
+    }, (err, info)=> {
+      if(err) {
+        console.log(err);
+        reject(err);
+      }
+      else{
+        console.log("Email Sent: ", info);
+        resolve(info);
+      }
+    });
+  })
+}
+
+async function sendConfirmationEmail(email, otp, content) {
+  const res = await sendEmail(email, otp, content);
+  console.log(otp);
 };
 
 module.exports = sendConfirmationEmail;

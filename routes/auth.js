@@ -65,14 +65,12 @@ router.delete('/signout', (req, res) => {
 });
 
 router.get('/successjson', (req,res)=>{
-    console.log(req.user);
     res.status(200).send(req.user);
 });
 
 router.get('/failurejson', (req,res)=>{
     const message = req.flash('error');
     const needVerification = (message == "Email ID is not verified") ? true : false;
-    console.log({needVerification, message });
     res.status(200).send({needVerification, message });
 });
 
@@ -91,13 +89,13 @@ router.post('/send-otp', async (req, res)=> {
         token += characters[Math.floor(Math.random() * characters.length )];
     }
 
-    const {email} = req.body;
+    const {email, content} = req.body;
     const savedUser = await User.findOne({email : email})
     if(!savedUser){
         res.status(200).send({isSuccess : false, message : "User is not registered with this Email Address"});
     }
     else{
-        sendEmail(email, token);
+        await sendEmail(email, token, content);
         savedUser.confirmationCode = token;
         savedUser.save((err)=> {
             if(err) {
