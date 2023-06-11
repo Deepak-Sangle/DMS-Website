@@ -34,38 +34,6 @@ const Signin = () => {
 		forgot.current = document.getElementById("forgot");
 	}, [])
 
-	const htmlBodyForNewAccount = () => {
-		return {
-			subject : "Please confirm your DMS account", 
-			body : `
-				<h1>Email Confirmation</h1>
-				<h2>Hello ${email}$</h2>
-				<p>Thank you for Registering in DMS-WebApp. Here is the one time password for your verification of the email id.</p>
-				<br/>
-				<h3>${otp}</h3>
-				<br/>
-				<p>If the above request is not initiated by you please report it immediately by clicking <a href="localhost:3000/report/verification">here</a> </p>
-				</div>
-			`
-		}
-	}
-
-	const htmlBodyForNewPassword = () => {
-		return {
-			subject : "Request for new Password", 
-			body : `
-				<h1>Password Reset</h1>
-				<h2>Hello ${email}$</h2>
-				<p>You forgot your password? That's okay! Just Enter the OTP shown below to verify your Email Address and you are good to go.</p>
-				<br/>
-				<h3>${otp}</h3>
-				<br/>
-				<p>If the above request is not initiated by you please report it immediately by clicking <a href="localhost:3000/report/verification">here</a> </p>
-				</div>
-			`
-		}
-	}
-
 	const validateEmailAddress = () => {
 		const validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 		if (email.match(validRegex)) {
@@ -123,11 +91,12 @@ const Signin = () => {
 			setEmail("");
 		}
 		toast.clearWaitingQueue();
+		setLoading(false);
 	}
 
 	const handleSignIn = async () => {
 		setLoading(true);
-		const res = await fetch('/signin', {
+		const res = await fetch('/auth/signin', {
 			method : "POST",
 			headers : {
 				"Content-Type" : "application/json"
@@ -162,7 +131,7 @@ const Signin = () => {
 			notify("Password do not match", "WARN");
 			return false;
 		}
-		const res = await fetch('/signup', {
+		const res = await fetch('/auth/signup', {
 			method : "POST",
 			headers : {
 				"Content-Type" : "application/json"
@@ -176,7 +145,7 @@ const Signin = () => {
 		if(res.status===200 && data.isSuccess === true) {
 			signIn.current.style.display = "none";
 			verify.current.style.display = "block";
-			moveDown(verify, signUp);
+			moveDown(verify.current, signUp.current);
 		}
 		else if(res.status===200 && data.isSuccess === false){
 			notify("Email ID Already Registered", "WARN");
@@ -254,14 +223,14 @@ const Signin = () => {
 		return true;
 	}
 
-	const sendOtpEmail = async (content)=> {
+	const sendOtpEmail = async (contentType)=> {
 		setLoading(true);
-		const res = await fetch('/send-otp', {
+		const res = await fetch('/auth/send-otp', {
 			method : "POST",
 			headers : {
 				"Content-Type" : "application/json"
 			},
-			body : JSON.stringify({email, content})
+			body : JSON.stringify({email, contentType})
 		});
 		const data = await res.json();
 		setLoading(false);
@@ -286,7 +255,7 @@ const Signin = () => {
 			notify("OTP cannot be empty", "WARN");
 			return false;
 		}
-		const res = await fetch('/verify-otp', {
+		const res = await fetch('/auth/verify-otp', {
 			method : "POST",
 			headers : {
 				"Content-Type" : "application/json"
@@ -321,8 +290,10 @@ const Signin = () => {
 			notify("Password do not match", "WARN");
 			return false;
 		}
-		if(!validatePassword()) return false;
-		const res = await fetch('/set-password', {
+		if(!validatePassword()){ 
+			return false;
+		}
+		const res = await fetch('/auth/set-password', {
 			method : "POST",
 			headers : {
 				"Content-Type" : "application/json"
@@ -354,7 +325,7 @@ const Signin = () => {
 				return false;
 			}
 			if(!validateEmailAddress()) return false;
-			const res = await sendOtpEmail(htmlBodyForNewPassword());
+			const res = await sendOtpEmail("NEW_PASSWORD");
 			if(res === true) {
 				setForgotStates(states[1]);
 				return true;
@@ -492,7 +463,7 @@ const Signin = () => {
 					
 						<div id="verify" className="right">
 							<h5>Verify Email</h5>
-							<div>Please Verify your email ID by clicking <span className="create-span" onClick={() => sendOtpEmail(htmlBodyForNewAccount())}>here</span></div>
+							<div>Please Verify your email ID by clicking <span className="create-span" onClick={() => sendOtpEmail("NEW_ACCOUNT")}>here</span></div>
 							<div id="email-div">Email : <span id="email-span">{email}</span></div>
 							<form onSubmit={handleVerifyOtp}>
 								<div className="inputs">

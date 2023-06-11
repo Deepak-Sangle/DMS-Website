@@ -36,7 +36,7 @@ const Navbar = () => {
     }
     
     const getData = async () =>{
-        const res = await fetch('./getdata');
+        const res = await fetch('/auth/getdata');
         const data = await res.json();       
         if(data.isAuthenticated === false) {
             alert("Hacked");
@@ -45,7 +45,7 @@ const Navbar = () => {
     }
 
     const handleSignout = async () => {
-        const res = await fetch('/signout', {
+        const res = await fetch('/auth/signout', {
             method : "DELETE",
             headers : {
 				"Content-Type" : "application/json"

@@ -7,7 +7,7 @@ const ProtectedRoute = () => {
     const [auth, setAuth] = useState();
 
     const checkAuthentication = async ()=>{
-        const res = await fetch('/checkauth', {
+        const res = await fetch('/auth/checkauth', {
         	method : "GET",
         	credentials: "include",	
         	headers: {

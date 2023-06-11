@@ -20,7 +20,6 @@ function initPassport(passport, getUserbyEmail) {
                 return callback(null, false, {"message" : "Email ID is not verified"});
             }
             else {
-                console.log("wrongPass");
                 return callback(null, false, { "message": "Wrong username or password" });
             }
 
@@ -28,6 +27,7 @@ function initPassport(passport, getUserbyEmail) {
             return callback(error);
         }
     }
+
 
     passport.use(new LocalStrategy({ usernameField: 'email' }, authenticateUser))
 
@@ -40,6 +40,7 @@ function initPassport(passport, getUserbyEmail) {
             callback(err, user);
         });
     });
+
 }
 
 module.exports = initPassport;

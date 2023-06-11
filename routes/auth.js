@@ -4,22 +4,14 @@ const passport = require("passport");
 const { checkNotAuthenticated, checkAuthenticated, isVerify } = require('../middlewares/authMiddleware');
 const router = express.Router();
 require("dotenv").config();
-const sendEmail = require('../nodemailer-config');
+const sendEmail = require('../email/nodemailer-config');
 
 //Requiring Models Schemas
 const User = require('../models/user');
 
 //Getting all requests
 
-router.get('/', checkAuthenticated, (req,res)=> {
-    res.status(200).send(req.user);
-});
-
-router.get('/signup', checkNotAuthenticated, (req,res)=>{
-    res.status(200).send("Hello this is get request for signup");
-});
-
-router.post('/signup', async (req, res) => {
+router.post('/auth/signup', async (req, res) => {
     const { name, email, password } = req.body;
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = new User({
@@ -48,54 +40,48 @@ router.post('/signup', async (req, res) => {
         .catch((err)=> console.log(err));
 });
 
-router.get("/signin", checkNotAuthenticated, (req, res) => {
-    const message = (req.flash('error'))[0];
-    res.status(200).send({message});
-});
-
-router.post('/signin', passport.authenticate('local', {
-    successRedirect: '/successjson',
-    failureRedirect: '/failurejson',
+router.post('/auth/signin', passport.authenticate('local', {
+    successRedirect: '/auth/successjson',
+    failureRedirect: '/auth/failurejson',
     failureFlash: true
 }));
 
-router.delete('/signout', (req, res) => {
+router.delete('/auth/signout', (req, res) => {
     req.logOut();
     res.status(200).send({isSucess : true, message : "Logout Successfully"})
 });
 
-router.get('/successjson', (req,res)=>{
+router.get('/auth/successjson', (req,res)=>{
     res.status(200).send(req.user);
 });
 
-router.get('/failurejson', (req,res)=>{
+router.get('/auth/failurejson', (req,res)=>{
     const message = req.flash('error');
     const needVerification = (message == "Email ID is not verified") ? true : false;
     res.status(200).send({needVerification, message });
 });
 
-router.get('/checkauth', checkAuthenticated, (req,res)=>{
+router.get('/auth/checkauth', checkAuthenticated, (req,res)=>{
     return res.status(200).send({"isAuthenticated" : true});    
 });
 
-router.get('/getdata', checkAuthenticated, (req,res)=> {
+router.get('/auth/getdata', checkAuthenticated, (req,res)=> {
     return res.status(200).send(req.user);
 });
 
-router.post('/send-otp', async (req, res)=> {
+router.post('/auth/send-otp', async (req, res)=> {
     const characters = 'lbjksdfih327t6234kbABHCUIIHGYSUJjsfd98bf56gr3rdg5ggsa4dsyjnbgsg2egsg1';
     let token = '';
     for (let i = 0; i < 6; i++) {
         token += characters[Math.floor(Math.random() * characters.length )];
     }
 
-    const {email, content} = req.body;
+    const {email, contentType} = req.body;
     const savedUser = await User.findOne({email : email})
     if(!savedUser){
         res.status(200).send({isSuccess : false, message : "User is not registered with this Email Address"});
     }
     else{
-        await sendEmail(email, token, content);
         savedUser.confirmationCode = token;
         savedUser.save((err)=> {
             if(err) {
@@ -106,10 +92,11 @@ router.post('/send-otp', async (req, res)=> {
                 res.status(200).send({isSuccess : true});
             } 
         })
+        await sendEmail(email, savedUser, contentType);
     }
 });
 
-router.post('/verify-otp', async (req,res)=> {
+router.post('/auth/verify-otp', async (req,res)=> {
     const {email, otp} = req.body;
     const savedUser = await User.findOne({email : email})
     if(!savedUser){
@@ -139,7 +126,8 @@ router.post('/verify-otp', async (req,res)=> {
     }
 });
 
-router.post('/set-password', async (req, res)=> {
+// Very insecure auth request !!!
+router.post('/auth/set-password', async (req, res)=> {
     const {email, password} = req.body;
     const savedUser = await User.findOne({email : email})
 
@@ -159,26 +147,6 @@ router.post('/set-password', async (req, res)=> {
             } 
         })
     }
-});
-
-router.get("/api/auth/confirm/:code", (req, res) => {
-    User.findOne({
-        confirmationCode: req.params.code,
-    })
-        .then((user) => {
-            if (!user) {
-                return res.status(404).send({ isSuccess : false, message: "User Not found." });
-            }
-            user.status = "Active";
-            user.save((err) => {
-                if (err) {
-                    res.status(500).send({ isSuccess : false, message: err });
-                    return;
-                }
-            });
-            res.status(200).send({isSuccess : true});
-        })
-        .catch((e) => console.log("error", e));
 });
 
 module.exports = router;

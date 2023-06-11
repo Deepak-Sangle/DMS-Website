@@ -35,7 +35,7 @@ const Services = () => {
     // }
 
     // const getData = async () => {
-    //     const res = await fetch('/getitems',  {
+    //     const res = await fetch('/auth/getitems',  {
 	// 		method : "GET",
 	// 		credentials: "include",	
 	// 		headers: {

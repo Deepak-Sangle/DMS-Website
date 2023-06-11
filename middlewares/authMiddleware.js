@@ -9,7 +9,6 @@ function checkAuthenticated(req, res, next) {
 }
 
 function checkNotAuthenticated(req, res, next) {
-    // console.log(req.headers);
     if (req.isAuthenticated()) {
         return res.status(200).send({"isAuthenticated" : true});
         // return res.redirect('/');
