@@ -80,7 +80,7 @@ const Navbar = () => {
                     {navbarAnchors.map((anchor, ind)=> {
                         return(
                             <div key={anchor.id} className="dropDown">
-                                <li className="NavLi NavBarLi"><Link className='NavLiA' to={anchor.href}> {anchor.heading} </Link></li>
+                                <li className="NavLi NavBarLi"><Link className='NavLiA' to={anchor.href}> {anchor.heading.toUpperCase()} </Link></li>
                                 <div className="dropdownContent">
                                     {ind !== navbarAnchors.length - 1 && anchor.subLinks.length > 0 && <li className="first-list dropdownlist" ><Link className='dropdownA' to={(anchor.subLinks)[0].href}>{(anchor.subLinks)[0].heading}</Link></li>}
                                     {ind === navbarAnchors.length - 1 &&  <li className="first-list dropdownlist" ><Link className='dropdownA' to="#">{user && user.name}</Link></li>}

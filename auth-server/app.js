@@ -44,7 +44,6 @@ app.use(passport.session());
 
 //Route Requests
 app.use(require('./routes/auth'));
-app.use(require('./routes/item'));
 
 //Listen Port
 app.listen(PORT, (req,res)=>{

@@ -6,6 +6,7 @@ import CheckNotAuthenticated from './Helper/CheckNotAuthenticated.js';
 import Homepage from './Screens/Homepage.js';
 import Services from './Screens/Services.js';
 import Loader7 from './Components/Loading.js';
+import Navbar from './Components/Navbar.js';
 
 const App = () => {
     return ( 

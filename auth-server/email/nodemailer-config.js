@@ -40,7 +40,6 @@ async function sendConfirmationEmail(email, user, contentType) {
     path = './email/new_password.ejs';
     subject = "Request for new Password";
   }
-  console.log(user);
   const htmlFileString = fs.readFileSync(path, "utf-8");
   const htmlContent = ejs.render(htmlFileString, {user});
   await sendEmail(email, htmlContent, subject);
