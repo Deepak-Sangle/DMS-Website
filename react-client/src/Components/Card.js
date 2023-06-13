@@ -36,7 +36,7 @@ const MyCard = ({item}) => {
 
 const styles = {
     card : {
-        boxShadow : "0px 0px 10px #888888",
+        boxShadow : "0px 0px 10px black",
         border : "0px",
         fontFamily : "Segoe UI",
         flexShrink : "0",

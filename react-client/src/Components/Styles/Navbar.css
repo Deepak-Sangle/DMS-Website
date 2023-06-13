@@ -12,7 +12,7 @@
     }
   }
   .MobileNav {
-    background-color: black;
+    background-color: #151414;
     text-align: end;
   }
   .MobileNavUl {
@@ -124,7 +124,7 @@
     top: 0px;
     flex-flow: row wrap;
     justify-content: center;
-    background-color: black;
+    background-color: #151414;
     border: 2px solid black;
   }
   .Nav ul,
@@ -183,25 +183,25 @@
   /*DropDownMenu */
   .dropdownContent{
     display: none;
-    background-color: black;
+    background-color: #151414;
     z-index: +1;
     position: absolute;
     transform-origin: top center;
     width: 100%;
-    animation: dropdown 0.4s ease-out 0s 1 normal forwards;
+    animation: dropdown 0.4s  ease-in-out forwards;
   }
 
   @keyframes dropdown {
     0% {
       opacity: 0;
-      transform: rotateX(-90deg);
+      transform: translateZ(590px);
     }
     80% {
-      transform: rotateX(20deg);
+      transform: translateZ(100px);
     }
     100% {
       opacity: 1;
-      transform: rotateX(0deg);
+      transform: translateZ(0px);
     }
   }
 
@@ -212,12 +212,17 @@
     list-style: none;
     cursor: pointer;
     border: 2px solid black;
+    border-bottom: 0px;
     border-top: 0px !important;
-    background-color: black;
+
+    background-color: #151414;
     padding: 1.1vh 1vw;
   }
   .first-list{
-    border-top: 2px solid black !important;
+    border-top: 2px solid #151414 !important;
+  }
+  .last-element-list{
+    border-bottom: 2px solid black !important;
   }
   .dropdownlist{
     color: white;
@@ -225,11 +230,10 @@
     /* font-weight: 600; */
   }
   .dropdownlist:hover{
-    /* color: black; */
     background-color: white;
   }
   .dropdownlist:hover .dropdownA {
-    color: black !important;
+    color: #151414 !important;
   }
   .dropDown:hover .dropdownContent{
     display: block !important; 

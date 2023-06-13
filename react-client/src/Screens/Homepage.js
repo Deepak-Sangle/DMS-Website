@@ -20,6 +20,9 @@ const Homepage = () => {
             <Navbar />
             <MainBG />
             <Announcement/>
+            <div style={Object.assign({}, customStyles.heading, {margin : "20px 0px 20px 0px"}) }>
+                {"Other Services".toUpperCase()} 
+            </div>
             <HorizontalCarousel data={horizontalCarousel} />
             <div style={Object.assign({}, customStyles.heading, {margin : "0px 0px 20px 0px"}) }>
                 {"Explore latest Stationeries".toUpperCase()} 
@@ -29,9 +32,9 @@ const Homepage = () => {
                 {"Best in class services".toUpperCase()} 
             </div>
             <StationeryCarousel data={topStationeryItems} />
-            <div style={Object.assign({}, customStyles.heading, {margin : "20px 0px 0px 0px"}) }>
+            {/* <div style={Object.assign({}, customStyles.heading, {margin : "20px 0px 0px 0px"}) }>
                 {"get all the custom Banners for your village".toUpperCase()} 
-            </div>
+            </div> */}
             <Footer />            
         </>
     );

@@ -85,10 +85,13 @@ const Navbar = () => {
                                     {ind !== navbarAnchors.length - 1 && anchor.subLinks.length > 0 && <li className="first-list dropdownlist" ><Link className='dropdownA' to={(anchor.subLinks)[0].href}>{(anchor.subLinks)[0].heading}</Link></li>}
                                     {ind === navbarAnchors.length - 1 &&  <li className="first-list dropdownlist" ><Link className='dropdownA' to="#">{user && user.name}</Link></li>}
                                     {anchor.subLinks.map((links, i)=> {
-                                        if(links.href !== "/signout" && (i > 0 || ind === navbarAnchors.length - 1)) return(
+                                        if(i === anchor.subLinks.length - 1) return(
+                                            <li key={links.id} className="dropdownlist last-element-list" ><Link className='dropdownA' to={links.href}>{links.heading}</Link></li>
+                                        )
+                                        else if(links.href !== "/signout" && (i > 0 || ind === navbarAnchors.length - 1)) return(
                                             <li key={links.id} className="dropdownlist" ><Link className='dropdownA' to={links.href}>{links.heading}</Link></li>
                                         )
-                                        if(links.href === "/signout") return (
+                                        else if(links.href === "/signout") return (
                                             <li key={links.id} onClick={handleSignout} className="dropdownlist" ><div className='dropdownA'>{links.heading}</div></li>
                                         )
                                     })}

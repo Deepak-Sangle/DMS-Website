@@ -12,12 +12,15 @@
     box-sizing: border-box;
     height: 230px;
     width: 32.96vw;
-    color: black;
+    color: #151414;
     text-decoration-style: solid;
     text-align: center;
     font-size: 3vw;
     line-height: 200px;
-    font-weight: bold;
+    border: 2px solid #151414;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-shadow: 3px 3px 15px white;
     cursor: pointer;
     transition-duration: 0.5s;
     transition-property: all;
