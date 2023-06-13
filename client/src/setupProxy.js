@@ -9,6 +9,14 @@ function setupProxy (app) {
       changeOrigin: true,
     })
   );
+
+  app.use(
+    '/auth',
+    createProxyMiddleware({
+      target: 'http://localhost:5000',
+      changeOrigin: true,
+    })
+  );
 };
 
 module.exports = setupProxy;
