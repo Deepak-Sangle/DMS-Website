@@ -35,7 +35,7 @@ const Homepage = () => {
             {/* <div style={Object.assign({}, customStyles.heading, {margin : "20px 0px 0px 0px"}) }>
                 {"get all the custom Banners for your village".toUpperCase()} 
             </div> */}
-            <Footer />            
+            <Footer />
         </>
     );
 }

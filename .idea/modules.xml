@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/DMS-Website.iml" filepath="$PROJECT_DIR$/.idea/DMS-Website.iml" />
-      <module fileurl="file://$PROJECT_DIR$/inventory-server/src/main/main.iml" filepath="$PROJECT_DIR$/inventory-server/src/main/main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/inventory-server/src/test/test.iml" filepath="$PROJECT_DIR$/inventory-server/src/test/test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/inventory-server/inventory-server.iml" filepath="$PROJECT_DIR$/inventory-server/inventory-server.iml" />
     </modules>
   </component>
 </project>
