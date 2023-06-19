@@ -9,6 +9,7 @@ const PORT = process.env.PORT || 5000;
 
 //Requiring models if any
 const User = require('./models/user');
+const setupProxy = require('./setupProxy');
 
 //Set up MongoDB Database 
 mongoose.connect(process.env.MONGOURI);
@@ -44,6 +45,7 @@ app.use(passport.session());
 
 //Route Requests
 app.use(require('./routes/auth'));
+setupProxy(app);
 
 //Listen Port
 app.listen(PORT, (req,res)=>{
