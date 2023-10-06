@@ -30,20 +30,22 @@ const sendEmail = async  (email, htmlContent, subject)=> {
   })
 }
 
-async function sendConfirmationEmail(email, user, contentType) {
-  let path, subject;
-  if(contentType === "NEW_ACCOUNT"){
-    path = './email/new_account.ejs';
-    subject = "Confirm your DMS account";
-  }
-  else if(contentType === "NEW_PASSWORD"){
-    path = './email/new_password.ejs';
-    subject = "Request for new Password";
-  }
-  const htmlFileString = fs.readFileSync(path, "utf-8");
-  const htmlContent = ejs.render(htmlFileString, {user});
-  await sendEmail(email, htmlContent, subject);
-  console.log(user.confirmationCode);
+async function sendConfirmationEmail(email, user, contentType, extraInfo) {
+    let path, subject;
+    if(contentType === "NEW_ACCOUNT"){
+        path = './email/new_account.ejs';
+        subject = "Confirm your DMS account";
+    }
+    else if(contentType === "NEW_PASSWORD"){
+        path = './email/new_password.ejs';
+        subject = "Request for new Password";
+    }
+
+    const htmlFileString = fs.readFileSync(path, "utf-8");
+    console.log({ user, ...extraInfo });
+    const htmlContent = ejs.render(htmlFileString, { user, ...extraInfo });
+    await sendEmail(email, htmlContent, subject);
+    console.log(user.confirmationCode);
 };
 
 module.exports = sendConfirmationEmail;

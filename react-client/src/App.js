@@ -5,8 +5,6 @@ import ProtectedRoute from './Helper/ProtectedRoute.js';
 import CheckNotAuthenticated from './Helper/CheckNotAuthenticated.js';
 import Homepage from './Screens/Homepage.js';
 import Services from './Screens/Services.js';
-import Loader7 from './Components/Loading.js';
-import Navbar from './Components/Navbar.js';
 
 const App = () => {
     return ( 
@@ -18,7 +16,8 @@ const App = () => {
                         <Route path='/services' element={<Services />} />
                     </Route>
                     <Route path='/' element={<CheckNotAuthenticated />}>
-                        <Route path='/signin' element={<Signin />} />
+                        <Route exact path='/signin' element={<Signin />} />
+                        <Route path='/signin/:confirmationCode' element={<Signin />} />
                     </Route>
                 </Routes>
             </div>

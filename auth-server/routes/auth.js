@@ -1,6 +1,8 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
 const passport = require("passport");
+const crypto = require('crypto');
+const { CLIENT_BASE_URL } = require('../constants');
 const { checkNotAuthenticated, checkAuthenticated, isVerify } = require('../middlewares/authMiddleware');
 const router = express.Router();
 require("dotenv").config();
@@ -8,8 +10,6 @@ const sendEmail = require('../email/nodemailer-config');
 
 //Requiring Models Schemas
 const User = require('../models/user');
-
-//Getting all requests
 
 router.post('/auth/signup', async (req, res) => {
     const { name, email, password } = req.body;
@@ -96,6 +96,32 @@ router.post('/auth/send-otp', async (req, res)=> {
     }
 });
 
+router.post('/auth/send-verification-link', async (req, res) => {
+
+    const token = crypto.randomBytes(32).toString('hex');
+    const hashedToken = await bcrypt.hash(token, 10);
+
+    const { email, contentType } = req.body;
+    const savedUser = await User.findOne({ email: email })
+    if (!savedUser) {
+        res.status(200).send({ isSuccess: false, message: "User is not registered with this Email Address" });
+    }
+    else {
+        savedUser.confirmationCode = hashedToken; 
+        savedUser.save((err) => {
+            if (err) {
+                console.log(err);
+                res.status(200).send({ isSuccess: false, message: "Something went wrong! Login again" });
+            }
+            else {
+                res.status(200).send({ isSuccess: true });
+            }
+        });
+        const link = `${CLIENT_BASE_URL}/signin/${token}`
+        sendEmail(email, savedUser, contentType, { link });
+    }
+});
+
 router.post('/auth/verify-otp', async (req,res)=> {
     const {email, otp} = req.body;
     const savedUser = await User.findOne({email : email})
@@ -126,15 +152,18 @@ router.post('/auth/verify-otp', async (req,res)=> {
     }
 });
 
-// Very insecure auth request !!!
-router.post('/auth/set-password', async (req, res)=> {
-    const {email, password} = req.body;
+router.post('/auth/set-password', async (req, res) => {
+    const { email, password, confirmationCode } = req.body;
     const savedUser = await User.findOne({email : email})
 
     if(!savedUser){
         res.status(200).send({isSuccess : false, message : "User is not registered with this Email Address"});
     }
-    else{
+    else {
+        const isTokenValid = await bcrypt.compare(confirmationCode, savedUser.confirmationCode);
+        if (!isTokenValid) {
+            return res.status(200).send({ isSuccess: false, message: "Authorization Failed" });
+        }
         const hashedPassword = await bcrypt.hash(password, 10);
         savedUser.password = hashedPassword;
         savedUser.save((err)=> {

@@ -45,6 +45,7 @@ const Navbar = () => {
     }
 
     const handleSignout = async () => {
+        console.log("handleSignoutCalled");
         const res = await fetch('/auth/signout', {
             method : "DELETE",
             headers : {
@@ -84,15 +85,15 @@ const Navbar = () => {
                                 <div className="dropdownContent">
                                     {ind !== navbarAnchors.length - 1 && anchor.subLinks.length > 0 && <li className="first-list dropdownlist" ><Link className='dropdownA' to={(anchor.subLinks)[0].href}>{(anchor.subLinks)[0].heading}</Link></li>}
                                     {ind === navbarAnchors.length - 1 &&  <li className="first-list dropdownlist" ><Link className='dropdownA' to="#">{user && user.name}</Link></li>}
-                                    {anchor.subLinks.map((links, i)=> {
-                                        if(i === anchor.subLinks.length - 1) return(
+                                    {anchor.subLinks.map((links, i) => {
+                                        if (i === anchor.subLinks.length - 1 && links.href !== '/signout') return (
                                             <li key={links.id} className="dropdownlist last-element-list" ><Link className='dropdownA' to={links.href}>{links.heading}</Link></li>
                                         )
-                                        else if(links.href !== "/signout" && (i > 0 || ind === navbarAnchors.length - 1)) return(
+                                        else if(links.href !== "/signout") return(
                                             <li key={links.id} className="dropdownlist" ><Link className='dropdownA' to={links.href}>{links.heading}</Link></li>
                                         )
                                         else if(links.href === "/signout") return (
-                                            <li key={links.id} onClick={handleSignout} className="dropdownlist" ><div className='dropdownA'>{links.heading}</div></li>
+                                            <li key={links.id} onClick={handleSignout} className="dropdownlist last-element-list" ><div className='dropdownA'>{links.heading}</div></li>
                                         )
                                     })}
                                 </div>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import { ThreeDots } from 'react-loader-spinner'
 
@@ -8,6 +8,8 @@ import './Styles/Signin.css';
 
 const Signin = () => {
 
+	const { confirmationCode } = useParams();
+
 	const navigate = useNavigate();
 	
 	const [name, setName] = useState("");
@@ -15,23 +17,27 @@ const Signin = () => {
 	const [isSignin, setIsSignin] = useState(true);
 	const [password,setPassword] = useState("");
 	const [email,setEmail] = useState("");
-	const [isVerify, setIsVerify] = useState();
 	const [otp, setOtp] = useState("");
 	const [loading, setLoading] = useState(false);
 	
-	const states = ["Send OTP", "Verify OTP", "Set Password"];
+	const states = ["Send OTP", "Set Password"];
 	const [forgotStates, setForgotStates] = useState(states[0]);
 
 	const signIn = useRef(null);
-  const verify = useRef(null);
-  const signUp = useRef(null);
-  const forgot = useRef(null);
+	const verify = useRef(null);
+	const signUp = useRef(null);
+	const forgot = useRef(null);
 
 	useEffect(()=> {
 		signIn.current = document.getElementById("signIn");
 		verify.current = document.getElementById("verify");
 		signUp.current = document.getElementById("signUp");
 		forgot.current = document.getElementById("forgot");
+		if (confirmationCode !== undefined ) {
+			setForgotStates(states[1]);
+			handleForgot();
+
+		}
 	}, [])
 
 	const validateEmailAddress = () => {
@@ -67,7 +73,7 @@ const Signin = () => {
 	const notify = (msg, type, time) => {
 		const settings = {
 			position: "top-left",
-			autoClose: time != undefined ? time : 1500,
+			autoClose: time !== undefined ? time : 1500,
 			hideProgressBar: true,
 			closeOnClick: true,
 			pauseOnHover: true,
@@ -75,13 +81,13 @@ const Signin = () => {
 			progress: undefined,
 			theme: "dark",
 		};
-		if(type == "WARN")
+		if(type === "WARN")
 			toast.warn(msg, settings);
-		else if(type == "ERROR")
+		else if(type === "ERROR")
 			toast.error(msg, settings);
-		else if(type == "INFO")
+		else if(type === "INFO")
 			toast.info(msg, settings);
-		else if(type == "SUCCESS")
+		else if(type === "SUCCESS")
 			toast.success(msg, settings);
 		
 		if(type === "ERROR"){
@@ -249,9 +255,35 @@ const Signin = () => {
 		return false;
 	}
 
+	const sendVerificationEmail = async (contentType) => {
+		setLoading(true);
+		const res = await fetch('/auth/send-verification-link', {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify({ email, contentType })
+		});
+		const data = await res.json();
+		setLoading(false);
+		if (res.status === 200) {
+			if (!data.isSuccess) {
+				notify(data.message, "WARN");
+			}
+			else {
+				notify("Verification Email Sent", "SUCCESS");
+				return true;
+			}
+		}
+		else {
+			notify("Something went wrong", "ERROR");
+		}
+		return false;
+	}
+
 	const VerifyOtp = async () => {
 		setLoading(true);
-		if(otp == ""){
+		if(otp === ""){
 			notify("OTP cannot be empty", "WARN");
 			return false;
 		}
@@ -298,13 +330,14 @@ const Signin = () => {
 			headers : {
 				"Content-Type" : "application/json"
 			},
-			body : JSON.stringify({email, password})
+			body: JSON.stringify({ email, password, confirmationCode })
 		});
 		const data = await res.json();
 		setLoading(false);
 		if(res.status === 200){
 			if(data.isSuccess === true){
 				notify("Password Set Succesfully", "SUCCESS");
+				setForgotStates(states[0]);
 				return true;
 			}
 			else{
@@ -324,17 +357,9 @@ const Signin = () => {
 				notify("Mising Credentials", "WARN");
 				return false;
 			}
-			if(!validateEmailAddress()) return false;
-			const res = await sendOtpEmail("NEW_PASSWORD");
+			if (!validateEmailAddress()) return false;
+			const res = await sendVerificationEmail("NEW_PASSWORD");
 			if(res === true) {
-				setForgotStates(states[1]);
-				return true;
-			}
-		}
-		else if(forgotStates === states[1]){
-			const res = await VerifyOtp();
-			if(res === true) {
-				setForgotStates(states[2]);
 				return true;
 			}
 		}
@@ -419,8 +444,7 @@ const Signin = () => {
 						<div id="forgot" className="right">
 							<h5>Forgot Password</h5>
 							{forgotStates === states[0] && <div>Please enter the registered Email Address</div>}
-							{forgotStates === states[1] && <div>Please enter the OTP</div>}
-							{forgotStates === states[2] && <div>Set new Password</div>}
+							{forgotStates === states[1] && <div>Set new Password</div>}
 							<form onSubmit={ForgotPassword}>
 								<div className="inputs">
 									{forgotStates === states[0] && <input 
@@ -431,30 +455,29 @@ const Signin = () => {
 									/>}
 
 									{forgotStates === states[1] && <input 
-										type="text" 
-										value={otp} 
-										onChange={(e)=>setOtp(e.target.value)} 
-										placeholder="OTP" 
+										type="email" 
+										value={email}
+										onChange={(e) => setEmail(e.target.value)} 
+										placeholder="Email" 
 									/>}
-
-									{forgotStates === states[2] && <input 
+									
+									{forgotStates === states[1] && <input 
 										type="password" 
 										value={password} 
 										onChange={(e)=>setPassword(e.target.value)} 
 										placeholder="Password" 
 									/>}
 
-									{forgotStates === states[2] && <input 
+									{forgotStates === states[1] && <input 
 										type="password" 
 										value={cpassword} 
 										onChange={(e)=>setCpassword(e.target.value)} 
 										placeholder="Confirm Password" 
 									/>}
 								</div>
-
-								<div className="remember-me--forget-password">
+								{forgotStates === states[0] && <div className="remember-me--forget-password">
 									<p onClick={RememberedPassword} className="forgetpass">Remembered? Go Back</p>
-								</div>
+								</div>}
 
 								<LoadingButton text={forgotStates} />
 

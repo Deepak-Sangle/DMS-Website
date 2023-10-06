@@ -1,3 +1,5 @@
+const { CLIENT_PORT } = require("../shared/common")
+
 const services_tags = {
     REGISTOR : "REGISTOR",
     RUBBER_STAMP : "RUBBER_STAMP",
@@ -55,4 +57,6 @@ const item_tags = convert_obj_to_arr(item_tags_obj);
 const item_size = convert_obj_to_arr(item_size_obj);
 const item_special_type = convert_obj_to_arr(item_special_type_obj);
 
-module.exports = {services_tags, font_styles, item_tags, item_tags_obj, item_size, item_size_obj, item_special_type, item_special_type_obj}
+const CLIENT_BASE_URL = (process.env.NODE_ENV === "production") ? "https://www.deepak-multi-services.com/" : `http://localhost:${CLIENT_PORT}`;
+
+module.exports = { services_tags, font_styles, item_tags, item_tags_obj, item_size, item_size_obj, item_special_type, item_special_type_obj, CLIENT_BASE_URL }
