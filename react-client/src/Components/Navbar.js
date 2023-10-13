@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom';
 import './Styles/Navbar.css';
 import { navbarAnchors } from '../Database/localDB';
 import { useNavigate } from 'react-router-dom';
+import { Fetch } from '../Services/Fetch';
 
 const Navbar = () => {
 
@@ -36,24 +37,31 @@ const Navbar = () => {
     }
     
     const getData = async () =>{
-        const res = await fetch('/auth/getdata');
-        const data = await res.json();       
-        if(data.isAuthenticated === false) {
-            alert("Hacked");
-        }
-        else setUser(data);
+        Fetch('auth/getdata', {
+            method : "GET"
+        })
+          .then((res) => res.json())
+          .then((data)=> {
+            if(data.isAuthenticated === false) {
+                return alert("Hacked");
+            }
+            setUser(data);
+          })
+          .catch((err)=> {
+            alert(err.message);
+          })
     }
 
     const handleSignout = async () => {
-        console.log("handleSignoutCalled");
-        const res = await fetch('/auth/signout', {
+        Fetch('/auth/signout', {
             method : "DELETE",
             headers : {
 				"Content-Type" : "application/json"
 			}
-        });
-		const data = await res.json();
-        navigate('/signin');
+        })
+		  .then(res => res.json())
+          .then(data => navigate('/signin'))
+        //   .catch((err)=> alert(err.message));
     }
 
     useEffect(()=>{

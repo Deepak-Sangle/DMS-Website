@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import { ThreeDots } from 'react-loader-spinner'
+import { Fetch } from '../Services/Fetch';
 
 import 'react-toastify/dist/ReactToastify.css';
 import './Styles/Signin.css';
@@ -102,7 +103,7 @@ const Signin = () => {
 
 	const handleSignIn = async () => {
 		setLoading(true);
-		const res = await fetch('/auth/signin', {
+		const res = await Fetch('/auth/signin', {
 			method : "POST",
 			headers : {
 				"Content-Type" : "application/json"
@@ -137,7 +138,7 @@ const Signin = () => {
 			notify("Password do not match", "WARN");
 			return false;
 		}
-		const res = await fetch('/auth/signup', {
+		const res = await Fetch('/auth/signup', {
 			method : "POST",
 			headers : {
 				"Content-Type" : "application/json"
@@ -231,7 +232,7 @@ const Signin = () => {
 
 	const sendOtpEmail = async (contentType)=> {
 		setLoading(true);
-		const res = await fetch('/auth/send-otp', {
+		const res = await Fetch('/auth/send-otp', {
 			method : "POST",
 			headers : {
 				"Content-Type" : "application/json"
@@ -257,7 +258,7 @@ const Signin = () => {
 
 	const sendVerificationEmail = async (contentType) => {
 		setLoading(true);
-		const res = await fetch('/auth/send-verification-link', {
+		const res = await Fetch('/auth/send-verification-link', {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json"
@@ -287,7 +288,7 @@ const Signin = () => {
 			notify("OTP cannot be empty", "WARN");
 			return false;
 		}
-		const res = await fetch('/auth/verify-otp', {
+		const res = await Fetch('/auth/verify-otp', {
 			method : "POST",
 			headers : {
 				"Content-Type" : "application/json"
@@ -325,7 +326,7 @@ const Signin = () => {
 		if(!validatePassword()){ 
 			return false;
 		}
-		const res = await fetch('/auth/set-password', {
+		const res = await Fetch('/auth/set-password', {
 			method : "POST",
 			headers : {
 				"Content-Type" : "application/json"

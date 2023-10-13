@@ -1,6 +1,16 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\auth-server",
+    "\\auth-server\\email",
+    "\\auth-server\\middlewares",
+    "\\auth-server\\models",
+    "\\auth-server\\Resources",
+    "\\auth-server\\routes",
+    "\\react-client",
+    "\\react-client\\src",
+    "\\shared"
   ],
+  "SelectedNode": "\\auth-server\\routes\\auth.js",
   "PreviewInSolutionExplorer": false
 }

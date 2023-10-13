@@ -17,7 +17,6 @@ const Homepage = () => {
 
     return (
         <>
-            <Navbar />
             <MainBG />
             <Announcement/>
             <div style={Object.assign({}, customStyles.heading, {margin : "20px 0px 20px 0px"}) }>

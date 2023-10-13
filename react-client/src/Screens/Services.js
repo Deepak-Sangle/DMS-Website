@@ -10,9 +10,6 @@ const Services = () => {
 
     return ( 
         <div>
-            <Navbar />
-            
-            <Footer />
         </div>
     );
 }
