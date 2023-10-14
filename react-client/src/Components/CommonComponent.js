@@ -6,7 +6,6 @@ const CommonComponents = () => {
   return (
     <>
       <Navbar />
-      <Outlet />
     </>
   );
 }

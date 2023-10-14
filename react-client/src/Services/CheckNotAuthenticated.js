@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 import Loading from '../Components/Loading';
-import { Fetch } from '../Services/Fetch';
 
 const CheckNotAuthenticated = () => {
     
     const [auth, setAuth] = useState();
 
     const checkAuthentication = async ()=>{
-        const res = await Fetch('/auth/checkauth', {
+        const res = await fetch('/auth/checkauth', {
         	method : "GET",
         	credentials: "include",	
         	headers: {

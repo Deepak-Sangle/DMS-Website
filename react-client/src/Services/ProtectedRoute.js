@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 import Loading from '../Components/Loading';
 import { Fetch } from '../Services/Fetch';
+import CommonComponents from '../Components/CommonComponent';
 
 const ProtectedRoute = () => {
     
@@ -25,8 +26,14 @@ const ProtectedRoute = () => {
         setAuth(data)
     }, [auth]);
 
+    
     if(auth!=undefined)
-        return auth ? <Outlet /> : <Navigate to='/signin' />;
+        return !auth ? 
+            <Navigate to='/signin' /> : 
+            <> 
+                <CommonComponents/>
+                <Outlet />
+            </> ;
     else{
         return <Loading />;
     }

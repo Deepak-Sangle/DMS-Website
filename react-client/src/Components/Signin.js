@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import { ThreeDots } from 'react-loader-spinner'
 import { Fetch } from '../Services/Fetch';
 
@@ -400,7 +400,6 @@ const Signin = () => {
 
     return (
         <div id="auth-box" className="box-form">
-					<ToastContainer limit={1} />
 
 	        <div className="left">
 	        	<div className="overlay">
