@@ -12,9 +12,9 @@ export function Fetch(url, options){
 
   fetchResponse.catch((err)=> Notify("Please Check your Internet Connection", "ERROR"));
   
-  const timeoutResponse = new Promise((_, reject) => {
+  const timeoutResponse = new Promise((resolve, _) => {
     setTimeout(() => {
-      reject({isSuccess : false, message : "Timeout Error"});
+      resolve({isSuccess : false, message : "Timeout Error"});
       controller.abort();
     }, 5000);
   });

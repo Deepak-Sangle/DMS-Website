@@ -112,8 +112,8 @@ const Signin = () => {
 				email, password
 			})
 		});
-		const data = await res.json();
 		setLoading(false);
+		const data = await res.json();
 		if(res.status===200 && data.message===undefined) {
 			navigate('/');
 		}
@@ -147,8 +147,8 @@ const Signin = () => {
 				name, email, password
 			})
 		});
-		const data = await res.json();
 		setLoading(false);
+		const data = await res.json();
 		if(res.status===200 && data.isSuccess === true) {
 			signIn.current.style.display = "none";
 			verify.current.style.display = "block";
@@ -239,8 +239,8 @@ const Signin = () => {
 			},
 			body : JSON.stringify({email, contentType})
 		});
-		const data = await res.json();
 		setLoading(false);
+		const data = await res.json();
 		if(res.status === 200){
 			if(!data.isSuccess){
 				notify(data.message, "WARN");
@@ -265,8 +265,8 @@ const Signin = () => {
 			},
 			body: JSON.stringify({ email, contentType })
 		});
-		const data = await res.json();
 		setLoading(false);
+		const data = await res.json();
 		if (res.status === 200) {
 			if (!data.isSuccess) {
 				notify(data.message, "WARN");
@@ -295,8 +295,8 @@ const Signin = () => {
 			},
 			body : JSON.stringify({email, otp})
 		});
-		const data = await res.json();
 		setLoading(false);
+		const data = await res.json();
 		if(res.status === 200){
 			if(data.isSuccess === true){
 				notify("OTP Verified Succesfully", "SUCCESS");
@@ -333,8 +333,8 @@ const Signin = () => {
 			},
 			body: JSON.stringify({ email, password, confirmationCode })
 		});
-		const data = await res.json();
 		setLoading(false);
+		const data = await res.json();
 		if(res.status === 200){
 			if(data.isSuccess === true){
 				notify("Password Set Succesfully", "SUCCESS");

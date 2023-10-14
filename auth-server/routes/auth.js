@@ -33,7 +33,9 @@ router.post('/auth/signup', async (req, res) => {
                         res.status(500).send({ message: err });
                         return;
                     }
-                    res.status(200).send({"message" : "Success","isSuccess" : true });
+                    setTimeout(()=> {
+                        res.status(200).send({"message" : "Success","isSuccess" : true });
+                    }, 10000);
                 });
             }
         })
@@ -77,7 +79,7 @@ router.post('/auth/send-otp', async (req, res)=> {
     }
 
     const {email, contentType} = req.body;
-    const savedUser = await User.findOne({email : email})
+    const savedUser = await User.findOne({email : email});
     if(!savedUser){
         res.status(200).send({isSuccess : false, message : "User is not registered with this Email Address"});
     }
