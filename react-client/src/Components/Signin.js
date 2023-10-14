@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { toast } from 'react-toastify';
 import { ThreeDots } from 'react-loader-spinner'
 import { Fetch } from '../Services/Fetch';
+import { Notify } from "./Notify";
 
 import 'react-toastify/dist/ReactToastify.css';
 import './Styles/Signin.css';
@@ -47,7 +48,7 @@ const Signin = () => {
 			return true;
 		} 
 		else {
-			notify("Invalid email address", "WARN");
+			Notify("Invalid email address", "WARN");
 			return false;
 		}
 	}
@@ -58,47 +59,17 @@ const Signin = () => {
 			return true;
 		}
 		else{
-			notify("Your password must contain atleast 6 characters including one numeric digit, one uppercase and one lowercase letter", "INFO", 3000)
+			Notify("Your password must contain atleast 6 characters including one numeric digit, one uppercase and one lowercase letter", "INFO", 3000)
 			return false;
 		}
 	}
 
 	const validateMissingCredentials = () => {
 		if((password === "" || email === "") || ((!isSignin && (cpassword === "" || name === "")))) {
-			notify("Missing Credentials", "WARN");
+			Notify("Missing Credentials", "WARN");
 			return false;
 		}
 		return true;
-	}
-
-	const notify = (msg, type, time) => {
-		const settings = {
-			position: "top-left",
-			autoClose: time !== undefined ? time : 1500,
-			hideProgressBar: true,
-			closeOnClick: true,
-			pauseOnHover: true,
-			draggable: true,
-			progress: undefined,
-			theme: "dark",
-		};
-		if(type === "WARN")
-			toast.warn(msg, settings);
-		else if(type === "ERROR")
-			toast.error(msg, settings);
-		else if(type === "INFO")
-			toast.info(msg, settings);
-		else if(type === "SUCCESS")
-			toast.success(msg, settings);
-		
-		if(type === "ERROR"){
-			setName("");
-			setCpassword("");
-			setPassword("");
-			setEmail("");
-		}
-		toast.clearWaitingQueue();
-		setLoading(false);
 	}
 
 	const handleSignIn = async () => {
@@ -124,18 +95,18 @@ const Signin = () => {
 				moveUp(signIn.current, verify.current);
 			}
 			else{
-				notify(data.message[0], "WARN");
+				Notify(data.message[0], "WARN");
 			}
 		}
 		else {
-			notify("Some error occured. Please try again", "ERROR");
+			Notify("Some error occured. Please try again", "ERROR");
 		}
 	}
 
 	const handleSignUp = async () => {
 		setLoading(true);
 		if(password!=cpassword) {
-			notify("Password do not match", "WARN");
+			Notify("Password do not match", "WARN");
 			return false;
 		}
 		const res = await Fetch('/auth/signup', {
@@ -155,13 +126,13 @@ const Signin = () => {
 			moveDown(verify.current, signUp.current);
 		}
 		else if(res.status===200 && data.isSuccess === false){
-			notify("Email ID Already Registered", "WARN");
+			Notify("Email ID Already Registered", "WARN");
 			signIn.current.style.display = "block";
 			verify.current.style.display = "none";
 			switchToSignIn();
 		}
 		else{
-			notify("Some error occured. Please try again", "ERROR");
+			Notify("Some error occured. Please try again", "ERROR");
 		}
 	}
 
@@ -243,15 +214,15 @@ const Signin = () => {
 		const data = await res.json();
 		if(res.status === 200){
 			if(!data.isSuccess){
-				notify(data.message, "WARN");
+				Notify(data.message, "WARN");
 			}
 			else{
-				notify("Otp Sent", "SUCCESS");
+				Notify("Otp Sent", "SUCCESS");
 				return true;
 			}
 		}
 		else{
-			notify("Something went wrong", "ERROR");
+			Notify("Something went wrong", "ERROR");
 		}
 		return false;
 	}
@@ -269,15 +240,15 @@ const Signin = () => {
 		const data = await res.json();
 		if (res.status === 200) {
 			if (!data.isSuccess) {
-				notify(data.message, "WARN");
+				Notify(data.message, "WARN");
 			}
 			else {
-				notify("Verification Email Sent", "SUCCESS");
+				Notify("Verification Email Sent", "SUCCESS");
 				return true;
 			}
 		}
 		else {
-			notify("Something went wrong", "ERROR");
+			Notify("Something went wrong", "ERROR");
 		}
 		return false;
 	}
@@ -285,7 +256,7 @@ const Signin = () => {
 	const VerifyOtp = async () => {
 		setLoading(true);
 		if(otp === ""){
-			notify("OTP cannot be empty", "WARN");
+			Notify("OTP cannot be empty", "WARN");
 			return false;
 		}
 		const res = await Fetch('/auth/verify-otp', {
@@ -299,16 +270,16 @@ const Signin = () => {
 		const data = await res.json();
 		if(res.status === 200){
 			if(data.isSuccess === true){
-				notify("OTP Verified Succesfully", "SUCCESS");
+				Notify("OTP Verified Succesfully", "SUCCESS");
 				return true;
 			}
 			else{
-				notify(data.message, "WARN");
+				Notify(data.message, "WARN");
 				return false;
 			}
 		}
 		else{
-			notify("Something went wrong", "ERROR");
+			Notify("Something went wrong", "ERROR");
 			return false;
 		}
 	}
@@ -316,11 +287,11 @@ const Signin = () => {
 	const SetPassword = async () => {
 		setLoading(true);
 		if(password === "" || cpassword === "") {
-			notify("Missing Credentials", "WARN");
+			Notify("Missing Credentials", "WARN");
 			return false;
 		}
 		else if(cpassword !== password) {
-			notify("Password do not match", "WARN");
+			Notify("Password do not match", "WARN");
 			return false;
 		}
 		if(!validatePassword()){ 
@@ -337,16 +308,16 @@ const Signin = () => {
 		const data = await res.json();
 		if(res.status === 200){
 			if(data.isSuccess === true){
-				notify("Password Set Succesfully", "SUCCESS");
+				Notify("Password Set Succesfully", "SUCCESS");
 				setForgotStates(states[0]);
 				return true;
 			}
 			else{
-				notify(data.message, "WARN");
+				Notify(data.message, "WARN");
 			}
 		}
 		else{
-			notify("Something went wrong", "ERROR");
+			Notify("Something went wrong", "ERROR");
 		}
 		return false;
 	}
@@ -355,7 +326,7 @@ const Signin = () => {
 		e.preventDefault();
 		if(forgotStates === states[0]){
 			if(email === "") {
-				notify("Mising Credentials", "WARN");
+				Notify("Mising Credentials", "WARN");
 				return false;
 			}
 			if (!validateEmailAddress()) return false;
