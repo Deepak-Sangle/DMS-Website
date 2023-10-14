@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { toast } from 'react-toastify';
 import { ThreeDots } from 'react-loader-spinner'
 import { Fetch } from '../Services/Fetch';
-import { Notify } from "./Notify";
+import { Notify } from "../Components/Notify";
 
 import 'react-toastify/dist/ReactToastify.css';
 import './Styles/Signin.css';
