@@ -4,6 +4,7 @@ import './Styles/Navbar.css';
 import { navbarAnchors } from '../Database/localDB';
 import { useNavigate } from 'react-router-dom';
 import { Fetch } from '../Services/Fetch';
+// import Logo from '../Images/.DMS/dms-logo.svg';
 
 const Navbar = () => {
 
@@ -84,30 +85,31 @@ const Navbar = () => {
             </div>
         
             <nav className="Nav " id="TopNavHeight">
-                {/* <DisplayNavLaptop navbar = {Navbar}/> */}
                 <ul className="NavUl">
-                    {navbarAnchors.map((anchor, ind)=> {
-                        return(
-                            <div key={anchor.id} className="dropDown">
-                                <li className="NavLi NavBarLi"><Link className='NavLiA' to={anchor.href}>{anchor.heading.toUpperCase()} </Link></li>
-                                <div className="dropdownContent">
-                                    {ind !== navbarAnchors.length - 1 && anchor.subLinks.length > 0 && <li className="first-list dropdownlist" ><Link className='dropdownA' to={(anchor.subLinks)[0].href}>{(anchor.subLinks)[0].heading}</Link></li>}
-                                    {ind === navbarAnchors.length - 1 &&  <li className="first-list dropdownlist" ><Link className='dropdownA' to="#">{user && user.name}</Link></li>}
-                                    {anchor.subLinks.map((links, i) => {
-                                        if (i === anchor.subLinks.length - 1 && links.href !== '/signout') return (
-                                            <li key={links.id} className="dropdownlist last-element-list" ><Link className='dropdownA' to={links.href}>{links.heading}</Link></li>
-                                        )
-                                        else if(links.href !== "/signout") return(
-                                            <li key={links.id} className="dropdownlist" ><Link className='dropdownA' to={links.href}>{links.heading}</Link></li>
-                                        )
-                                        else if(links.href === "/signout") return (
-                                            <li key={links.id} onClick={handleSignout} className="dropdownlist last-element-list" ><div className='dropdownA'>{links.heading}</div></li>
-                                        )
-                                    })}
-                                </div>
-                            </div>
-                        )
-                    })}
+                    <div className="dropDown">
+                        <li className="NavLi NavBarLi">
+                            <Link className='NavLiA' to='/'>
+                                {/* <Logo /> */}
+                                <img src={require("../Images/.DMS/Logo.png")} width='100vw' />
+                            </Link>
+                        </li>
+                    </div>
+                    <div className="dropDown">
+                        <li className="NavLi NavBarLi">
+                            <Link className='NavLiA' to='/'>ACCOUNT</Link>
+                        </li>
+                        <div className="dropdownContent">
+                            <li className="first-list dropdownlist" >
+                                <Link className='dropdownA' to="#">{user && user.name}</Link>
+                            </li>
+                            <li className="dropdownlist" >
+                                <Link className='dropdownA' to='#'>Accouncement</Link>
+                            </li>
+                            <li onClick={handleSignout} className="dropdownlist last-element-list" >
+                                <div className='dropdownA'>Sign Out</div>
+                            </li>
+                        </div>
+                    </div>
                 </ul>
             </nav>
 

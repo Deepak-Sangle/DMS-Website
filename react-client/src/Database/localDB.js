@@ -45,21 +45,21 @@ module.exports = {
         ]
     ],
     "navbarAnchors" : [
-        {heading : "Home", subLinks : [], id : 1, href : "/"},
-        {heading : "Services", subLinks : [
-            {heading : "All Services", href : "/services", id : 1},
-            {heading : "Registers", href : "#", id : 2},
-            {heading : "Other Services", href : "#", id : 3}
-        ], id : 2, href : "/services"},
-        {heading : "Prices", subLinks : [
-            {heading : "Price Lists", href : "#", id : 1},
-            {heading : "Order", href : "#", id : 2}
-        ], id : 3, href : "#"},
-        {heading : "About", subLinks : [
-            {heading : "Address", href : "#", id : 1},
-            {heading : "Availability", href : "#", id : 2},
-            {heading : "Contact", href : "#", id : 3}
-        ], id : 4, href : "#"},
+        // {heading : "Home", subLinks : [], id : 1, href : "/"},
+        // {heading : "Services", subLinks : [
+        //     {heading : "All Services", href : "/services", id : 1},
+        //     {heading : "Registers", href : "#", id : 2},
+        //     {heading : "Other Services", href : "#", id : 3}
+        // ], id : 2, href : "/services"},
+        // {heading : "Prices", subLinks : [
+        //     {heading : "Price Lists", href : "#", id : 1},
+        //     {heading : "Order", href : "#", id : 2}
+        // ], id : 3, href : "#"},
+        // {heading : "About", subLinks : [
+        //     {heading : "Address", href : "#", id : 1},
+        //     {heading : "Availability", href : "#", id : 2},
+        //     {heading : "Contact", href : "#", id : 3}
+        // ], id : 4, href : "#"},
         {heading : "Account", subLinks : [
             {heading : "Cart", href : "#", id : 1},
             {heading : "Annoucement", href : "#", id : 2},

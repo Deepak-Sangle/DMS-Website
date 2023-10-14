@@ -1,7 +1,6 @@
 import React, {useEffect} from 'react';
 
 import Navbar from '../Components/Navbar.js';
-import MainBG from '../Components/MainBG.js';
 import Offer from '../Components/Offer.js';
 import HorizontalCarousel from '../Components/HorizontalCarousel.js';
 import StationeryCarousel from '../Components/StationeryCarousel.js';
@@ -17,17 +16,13 @@ const Homepage = () => {
 
     return (
         <>
-            <MainBG />
-            <Announcement/>
+            <Offer />
             <div style={Object.assign({}, customStyles.heading, {margin : "20px 0px 20px 0px"}) }>
                 {"Other Services".toUpperCase()} 
             </div>
             <HorizontalCarousel data={horizontalCarousel} />
-            <div style={Object.assign({}, customStyles.heading, {margin : "0px 0px 20px 0px"}) }>
-                {"Explore latest Stationeries".toUpperCase()} 
-            </div>
-            <Offer />
-            <div style={Object.assign({}, customStyles.heading, {margin : "20px 0px 0px 0px"}) }>
+            <Announcement/>
+            <div style={Object.assign({}, customStyles.heading, {margin : "20px 0px 20px 0px"}) }>
                 {"Best in class services".toUpperCase()} 
             </div>
             <StationeryCarousel data={topStationeryItems} />
